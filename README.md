@@ -2,7 +2,7 @@
 
 # Requisitos
 
-Node.js >=v20.12.1
+Node.js versão 20.12.1 ou superior
 
 # Instalação do projeto
 
@@ -14,7 +14,7 @@ npm run dependecies
 
 # Inicialização do projeto
 
-Execute o script para iniciar o projeto com o aplicativo Expo Go:
+Execute o seguinte script para iniciar o projeto com o aplicativo Expo Go:
 
 ```
 npm start
