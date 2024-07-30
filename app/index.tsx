@@ -1,7 +1,5 @@
 import AppScreenTemplate from "@/components/AppScreenTemplate";
-import { Box, Text } from "@gluestack-ui/themed";
-
-import { Link } from "expo-router";
+import { Box } from "@gluestack-ui/themed";
 
 export default function SignIn() {
   return (

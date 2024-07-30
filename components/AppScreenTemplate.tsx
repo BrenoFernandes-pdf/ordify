@@ -1,12 +1,13 @@
 import { Box, Heading, Text, ScrollView } from "@gluestack-ui/themed";
 import MainGradient from "../assets/Icons/MainGradient";
+import { ReactElement } from "react";
 
 const AppScreenTemplate = ({
   screenDescription,
   children,
 }: {
   screenDescription: string;
-  children: React.ReactElement<typeof Box>;
+  children: ReactElement;
 }) => {
   return (
     <Box flex={1} bg="$black">
@@ -17,7 +18,8 @@ const AppScreenTemplate = ({
       <Box
         h="$1/3"
         w="$full"
-        p="$4"
+        pl="$4"
+        pb="$8"
         justifyContent="flex-end"
         alignItems="flex-start"
       >
@@ -33,10 +35,12 @@ const AppScreenTemplate = ({
         bg="white"
         h="$2/3"
         w="$full"
+        pt="$4"
+        paddingHorizontal="$4"
         borderTopLeftRadius="$3xl"
         borderTopRightRadius="$3xl"
       >
-        <ScrollView p="$4">{children}</ScrollView>
+        <ScrollView>{children}</ScrollView>
       </Box>
     </Box>
   );
