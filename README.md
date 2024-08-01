@@ -9,7 +9,7 @@ Node.js versão 20.12.1 ou superior
 Depois de clonar o repositório localmente, execute o seguinte script para atualizar as dependências do projeto:
 
 ```
-npm run dependencies
+npm run update
 ```
 
 # Inicialização do projeto
