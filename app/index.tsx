@@ -99,7 +99,7 @@ export default function SignIn() {
             </Link>
           </HStack>
 
-          <Link href="/tabs" asChild>
+          <Link href="/(tabs)" asChild>
             <Button size="lg">
               <ButtonText fontWeight="$bold">Sign in</ButtonText>
             </Button>

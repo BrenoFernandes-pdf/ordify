@@ -9,16 +9,13 @@ import {
   Box,
   LinkText,
   VStack,
+  HStack,
 } from "@gluestack-ui/themed";
 
 export default function Home() {
   return (
-    <Box flex={1}>
-      <VStack>
-        <Link>
-          <LinkText>Tab 2</LinkText>
-        </Link>
-      </VStack>
-    </Box>
+    <Text m="$1/3" color="$white">
+      Home
+    </Text>
   );
 }
