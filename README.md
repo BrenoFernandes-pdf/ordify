@@ -2,7 +2,7 @@
 
 # Requisitos
 
-Node.js versão 20.12.1 ou superior
+Node.js versão 20.x.x
 
 # Instalação do projeto
 
