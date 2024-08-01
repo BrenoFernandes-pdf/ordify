@@ -1,6 +1,6 @@
+import MainGradient from "../assets/Icons/MainGradient";
 import { Box, Heading, Text, ScrollView } from "@gluestack-ui/themed";
 import { ReactElement } from "react";
-import MainGradient from "../assets/Icons/MainGradient";
 
 const AppScreenTemplate = ({
   screenDescription,
@@ -15,18 +15,11 @@ const AppScreenTemplate = ({
         <MainGradient />
       </Box>
 
-      <Box
-        h="$1/3"
-        w="$full"
-        pl="$4"
-        pb="$8"
-        justifyContent="flex-end"
-        alignItems="flex-start"
-      >
+      <Box h="$1/3" w="$full" pl="$5" pb="$8" justifyContent="flex-end">
         <Heading color="white" size="5xl">
           Ordify
         </Heading>
-        <Text color="#C4B5FD" size="3xl">
+        <Text color="#C4B5FD" size="xl">
           {screenDescription}
         </Text>
       </Box>
@@ -35,8 +28,8 @@ const AppScreenTemplate = ({
         bg="white"
         h="$2/3"
         w="$full"
-        pt="$4"
-        px="$4"
+        pt="$6"
+        px="$6"
         borderTopLeftRadius="$3xl"
         borderTopRightRadius="$3xl"
       >
