@@ -19,6 +19,7 @@ const AppScreenTemplate = ({
         <Heading color="white" size="5xl">
           Ordify
         </Heading>
+
         <Text color="#C4B5FD" size="xl">
           {screenDescription}
         </Text>
