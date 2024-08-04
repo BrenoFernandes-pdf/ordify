@@ -31,7 +31,7 @@ export default function SignUp() {
   return (
     <AppScreenTemplate screenDescription="Crie sua conta">
       <Box>
-        <VStack space="3xl">
+        <VStack space="4xl">
           <FormControl size="lg" isInvalid={false} isRequired={true}>
             <FormControlLabel mb="$2">
               <FormControlLabelText>Nome</FormControlLabelText>
@@ -51,6 +51,7 @@ export default function SignUp() {
               </FormControlErrorText>
             </FormControlError>
           </FormControl>
+
           <FormControl size="lg" isInvalid={false} isRequired={true}>
             <FormControlLabel mb="$2">
               <FormControlLabelText>E-mail</FormControlLabelText>
@@ -70,6 +71,7 @@ export default function SignUp() {
               </FormControlErrorText>
             </FormControlError>
           </FormControl>
+
           <FormControl size="lg" isInvalid={false} isRequired={true}>
             <FormControlLabel mb="$2">
               <FormControlLabelText>Senha</FormControlLabelText>
@@ -89,6 +91,7 @@ export default function SignUp() {
               </FormControlErrorText>
             </FormControlError>
           </FormControl>
+
           <FormControl size="lg" isInvalid={false} isRequired={true}>
             <FormControlLabel mb="$2">
               <FormControlLabelText>Confirmar Senha</FormControlLabelText>
@@ -108,6 +111,7 @@ export default function SignUp() {
               </FormControlErrorText>
             </FormControlError>
           </FormControl>
+
           <Checkbox
             size="md"
             value="Manter Conectado"
@@ -116,35 +120,33 @@ export default function SignUp() {
             <CheckboxIndicator mr="$2">
               <CheckboxIcon as={CheckIcon} />
             </CheckboxIndicator>
-            <CheckboxLabel fontSize="$xs">
-              Eu aceito os
+            <CheckboxLabel>
+              <Text fontSize="$xs">Eu aceito os </Text>
               <Text fontWeight="bold" fontSize="$xs">
-                {" "}
                 Termos de Uso
-              </Text>{" "}
-              e
+              </Text>
+              <Text fontSize="$xs"> e </Text>
               <Text fontWeight="bold" fontSize="$xs">
-                {" "}
                 Política de Privacidade
               </Text>
             </CheckboxLabel>
           </Checkbox>
 
-          <Link href="/(tabs)" asChild>
+          <Link href="/" asChild>
             <Button size="lg" bgColor="#4C1D95">
               <ButtonText fontWeight="$bold">Sign up</ButtonText>
             </Button>
           </Link>
 
-          <Box alignItems="center">
+          <Box alignItems="center" mb="$8">
             <HStack>
               <Text fontWeight="$medium">Já possui uma conta? </Text>
+
               <Link href="/">
                 <LinkText fontWeight="$bold" color="#4C1D95">
                   Sign in
                 </LinkText>
               </Link>
-              <Box h="$32" bgColor="white" />
             </HStack>
           </Box>
         </VStack>
