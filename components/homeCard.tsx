@@ -7,7 +7,6 @@ import {
   HStack,
   Icon,
   ScrollView,
-  Text,
   VStack,
 } from "@gluestack-ui/themed";
 import { Href, Link } from "expo-router";
@@ -39,7 +38,6 @@ export default function HomeCard({
         shadowColor="$black"
         elevation="$1"
         mx="$4"
-        mb="$4"
       >
         <VStack space="sm">
           {path && (

@@ -31,8 +31,8 @@ export default function Home() {
         </HStack>
       </Box>
 
-      <ScrollView py="$8">
-        <VStack space="4xl" mb="$12">
+      <ScrollView>
+        <VStack space="4xl" py="$6">
           <HomeCard
             description="Confira seus organizadores"
             title="Destaques"
