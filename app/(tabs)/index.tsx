@@ -14,7 +14,7 @@ import {
 
 export default function Home() {
   return (
-    <Text m="$1/3" color="$white">
+    <Text m="$1/3" color="$black">
       Home
     </Text>
   );
