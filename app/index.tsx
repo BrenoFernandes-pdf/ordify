@@ -36,6 +36,7 @@ export default function SignIn() {
             <FormControlLabel mb="$2">
               <FormControlLabelText>E-mail</FormControlLabelText>
             </FormControlLabel>
+
             <Input>
               <InputField
                 type="text"
@@ -43,13 +44,16 @@ export default function SignIn() {
                 placeholderTextColor="#DBDFE5"
               />
             </Input>
+
             <FormControlHelper ml="$2">
               <FormControlHelperText>
                 Must be at least 6 characters.
               </FormControlHelperText>
             </FormControlHelper>
+
             <FormControlError ml="$2">
               <FormControlErrorIcon as={AlertCircleIcon} />
+
               <FormControlErrorText>
                 At least 6 characters are required.
               </FormControlErrorText>
@@ -60,6 +64,7 @@ export default function SignIn() {
             <FormControlLabel mb="$2">
               <FormControlLabelText>Senha</FormControlLabelText>
             </FormControlLabel>
+
             <Input>
               <InputField
                 type="password"
@@ -67,13 +72,16 @@ export default function SignIn() {
                 placeholderTextColor="#DBDFE5"
               />
             </Input>
+
             <FormControlHelper ml="$2">
               <FormControlHelperText>
                 Must be at least 6 characters.
               </FormControlHelperText>
             </FormControlHelper>
+
             <FormControlError ml="$2">
               <FormControlErrorIcon as={AlertCircleIcon} />
+
               <FormControlErrorText>
                 At least 6 characters are required.
               </FormControlErrorText>
@@ -89,6 +97,7 @@ export default function SignIn() {
               <CheckboxIndicator mr="$2">
                 <CheckboxIcon as={CheckIcon} />
               </CheckboxIndicator>
+
               <CheckboxLabel fontSize="$sm">Manter conectado</CheckboxLabel>
             </Checkbox>
 
@@ -108,6 +117,7 @@ export default function SignIn() {
           <Box alignItems="center">
             <HStack>
               <Text fontWeight="$medium">Não possui uma conta? </Text>
+
               <Link href="/signUp">
                 <LinkText fontWeight="$bold" color="#4C1D95">
                   Sign up
