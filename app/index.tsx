@@ -89,18 +89,18 @@ export default function SignIn() {
               <CheckboxIndicator mr="$2">
                 <CheckboxIcon as={CheckIcon} />
               </CheckboxIndicator>
-              <CheckboxLabel fontSize="$lg">Manter conectado</CheckboxLabel>
+              <CheckboxLabel fontSize="$sm">Manter conectado</CheckboxLabel>
             </Checkbox>
 
             <Link href="/forgotPassword" asChild>
-              <LinkText color="$black" fontSize="$lg" fontWeight="$bold">
+              <LinkText color="$black" fontSize="$sm" fontWeight="$bold">
                 Esqueceu a senha?
               </LinkText>
             </Link>
           </HStack>
 
           <Link href="/(tabs)" asChild>
-            <Button size="lg">
+            <Button size="lg" bgColor="#4C1D95">
               <ButtonText fontWeight="$bold">Sign in</ButtonText>
             </Button>
           </Link>
