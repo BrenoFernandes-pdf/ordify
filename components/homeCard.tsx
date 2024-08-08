@@ -43,7 +43,7 @@ export default function HomeCard({
           {path && (
             <>
               <HStack justifyContent="space-between" alignItems="center">
-                <Heading size="xl" fontWeight="$bold">
+                <Heading size="xl" fontWeight="$semi-bold">
                   {title}
                 </Heading>
 

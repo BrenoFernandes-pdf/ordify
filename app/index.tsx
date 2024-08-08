@@ -1,9 +1,7 @@
 import AppScreenTemplate from "@/components/AppScreenTemplate";
 import {
-  AddIcon,
   Box,
   Button,
-  ButtonIcon,
   ButtonText,
   Checkbox,
   CheckboxIcon,
@@ -29,104 +27,102 @@ import { AlertCircleIcon, CheckIcon } from "lucide-react-native";
 
 export default function SignIn() {
   return (
-    <AppScreenTemplate screenDescription="Acesse sua conta">
-      <Box>
-        <VStack space="4xl">
-          <FormControl size="lg" isInvalid={false} isRequired={true}>
-            <FormControlLabel mb="$2">
-              <FormControlLabelText>E-mail</FormControlLabelText>
-            </FormControlLabel>
+    <AppScreenTemplate description="Acesse sua conta">
+      <VStack space="4xl">
+        <FormControl size="lg" isRequired={true}>
+          <FormControlLabel mb="$2">
+            <FormControlLabelText>E-mail</FormControlLabelText>
+          </FormControlLabel>
 
-            <Input>
-              <InputField
-                type="text"
-                placeholder="E-mail"
-                placeholderTextColor="#DBDFE5"
-              />
-            </Input>
+          <Input>
+            <InputField
+              type="text"
+              placeholder="E-mail"
+              placeholderTextColor="#DBDFE5"
+            />
+          </Input>
 
-            <FormControlHelper ml="$2">
-              <FormControlHelperText>
-                Must be at least 6 characters.
-              </FormControlHelperText>
-            </FormControlHelper>
+          <FormControlHelper ml="$2">
+            <FormControlHelperText>
+              Must be at least 6 characters.
+            </FormControlHelperText>
+          </FormControlHelper>
 
-            <FormControlError ml="$2">
-              <FormControlErrorIcon as={AlertCircleIcon} />
+          <FormControlError ml="$2">
+            <FormControlErrorIcon as={AlertCircleIcon} />
 
-              <FormControlErrorText>
-                At least 6 characters are required.
-              </FormControlErrorText>
-            </FormControlError>
-          </FormControl>
+            <FormControlErrorText>
+              At least 6 characters are required.
+            </FormControlErrorText>
+          </FormControlError>
+        </FormControl>
 
-          <FormControl size="lg" isInvalid={false} isRequired={true}>
-            <FormControlLabel mb="$2">
-              <FormControlLabelText>Senha</FormControlLabelText>
-            </FormControlLabel>
+        <FormControl size="lg" isRequired={true}>
+          <FormControlLabel mb="$2">
+            <FormControlLabelText>Senha</FormControlLabelText>
+          </FormControlLabel>
 
-            <Input>
-              <InputField
-                type="password"
-                placeholder="Senha"
-                placeholderTextColor="#DBDFE5"
-              />
-            </Input>
+          <Input>
+            <InputField
+              type="password"
+              placeholder="Senha"
+              placeholderTextColor="#DBDFE5"
+            />
+          </Input>
 
-            <FormControlHelper ml="$2">
-              <FormControlHelperText>
-                Must be at least 6 characters.
-              </FormControlHelperText>
-            </FormControlHelper>
+          <FormControlHelper ml="$2">
+            <FormControlHelperText>
+              Must be at least 6 characters.
+            </FormControlHelperText>
+          </FormControlHelper>
 
-            <FormControlError ml="$2">
-              <FormControlErrorIcon as={AlertCircleIcon} />
+          <FormControlError ml="$2">
+            <FormControlErrorIcon as={AlertCircleIcon} />
 
-              <FormControlErrorText>
-                At least 6 characters are required.
-              </FormControlErrorText>
-            </FormControlError>
-          </FormControl>
+            <FormControlErrorText>
+              At least 6 characters are required.
+            </FormControlErrorText>
+          </FormControlError>
+        </FormControl>
 
-          <HStack justifyContent="space-between">
-            <Checkbox
-              size="md"
-              value="Manter conectado"
-              aria-label="Manter conectado"
-            >
-              <CheckboxIndicator mr="$2">
-                <CheckboxIcon as={CheckIcon} />
-              </CheckboxIndicator>
+        <HStack justifyContent="space-between">
+          <Checkbox
+            size="md"
+            value="Manter conectado"
+            aria-label="Manter conectado"
+          >
+            <CheckboxIndicator mr="$2">
+              <CheckboxIcon as={CheckIcon} color="$white" />
+            </CheckboxIndicator>
 
-              <CheckboxLabel fontSize="$sm">Manter conectado</CheckboxLabel>
-            </Checkbox>
+            <CheckboxLabel fontSize="$sm">Manter conectado</CheckboxLabel>
+          </Checkbox>
 
-            <Link href="/forgotPassword" asChild>
-              <LinkText color="$black" fontSize="$sm" fontWeight="$bold">
-                Esqueceu a senha?
+          <Link href="/forgotPassword" asChild>
+            <LinkText color="$black" fontSize="$sm" fontWeight="$bold">
+              Esqueceu a senha?
+            </LinkText>
+          </Link>
+        </HStack>
+
+        <Link href="/(tabs)" asChild>
+          <Button size="lg" bgColor="#4C1D95">
+            <ButtonText fontWeight="$bold">Sign in</ButtonText>
+          </Button>
+        </Link>
+
+        <Box alignItems="center">
+          <HStack>
+            <Text fontWeight="$medium">Não possui uma conta? </Text>
+
+            <Link href="/signUp">
+              <LinkText fontWeight="$bold" color="#4C1D95">
+                Sign up
               </LinkText>
             </Link>
           </HStack>
-
-          <Link href="/(tabs)" asChild>
-            <Button size="lg" bgColor="#4C1D95">
-              <ButtonText fontWeight="$bold">Sign in</ButtonText>
-            </Button>
-          </Link>
-
-          <Box alignItems="center">
-            <HStack>
-              <Text fontWeight="$medium">Não possui uma conta? </Text>
-
-              <Link href="/signUp">
-                <LinkText fontWeight="$bold" color="#4C1D95">
-                  Sign up
-                </LinkText>
-              </Link>
-            </HStack>
-          </Box>
-        </VStack>
-      </Box>
+        </Box>
+      </VStack>
     </AppScreenTemplate>
   );
 }

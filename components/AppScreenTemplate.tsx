@@ -3,11 +3,11 @@ import { Box, Heading, Text, ScrollView } from "@gluestack-ui/themed";
 import { ReactElement } from "react";
 
 type Props = {
-  screenDescription: string;
+  description: string;
   children: ReactElement;
 };
 
-const AppScreenTemplate = ({ screenDescription, children }: Props) => {
+export default function AppScreenTemplate({ description, children }: Props) {
   return (
     <Box flex={1} bg="$black">
       <Box position="absolute" h="$full" w="$full">
@@ -20,7 +20,7 @@ const AppScreenTemplate = ({ screenDescription, children }: Props) => {
         </Heading>
 
         <Text color="#C4B5FD" size="xl">
-          {screenDescription}
+          {description}
         </Text>
       </Box>
 
@@ -37,6 +37,4 @@ const AppScreenTemplate = ({ screenDescription, children }: Props) => {
       </Box>
     </Box>
   );
-};
-
-export default AppScreenTemplate;
+}

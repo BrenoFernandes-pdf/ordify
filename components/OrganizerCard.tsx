@@ -12,49 +12,53 @@ import {
 
 type Props = {
   imagePath: string;
-  organizerName: string;
-  organizerDescription: string;
+  name: string;
+  description: string;
 };
 
 export default function OrganizersCard({
   imagePath,
-  organizerName,
-  organizerDescription,
+  name,
+  description,
 }: Props) {
   return (
-    <Card
-      size="md"
-      variant="filled"
-      bg="$white"
-      shadowColor="$black"
-      elevation="$1"
-      mx="$4"
-    >
-      <HStack justifyContent="space-between">
-        <HStack space="md">
-          <Image
-            size="md"
-            source={{
-              uri: imagePath,
-            }}
-            alt="Foto do organizador"
-          />
+    <Pressable>
+      <Card
+        size="md"
+        variant="filled"
+        bg="$white"
+        shadowColor="$black"
+        elevation="$1"
+        mx="$4"
+      >
+        <HStack justifyContent="space-between">
+          <HStack space="md">
+            <Image
+              size="sm"
+              source={{
+                uri: imagePath,
+              }}
+              alt="Foto do organizador"
+            />
 
-          <VStack space="xs">
-            <Text fontWeight="$bold" fontSize="$2xl">
-              {organizerName}
-            </Text>
+            <VStack space="xs">
+              <Text fontWeight="$bold" fontSize="$lg">
+                {name}
+              </Text>
 
-            <Text>{organizerDescription}</Text>
-          </VStack>
+              <Text fontWeight="$light" fontSize="$sm">
+                {description}
+              </Text>
+            </VStack>
+          </HStack>
+
+          <Box>
+            <Pressable>
+              <Icon as={StarIcon} size="xl" />
+            </Pressable>
+          </Box>
         </HStack>
-
-        <Box>
-          <Pressable>
-            <Icon as={StarIcon} size="xl" />
-          </Pressable>
-        </Box>
-      </HStack>
-    </Card>
+      </Card>
+    </Pressable>
   );
 }
