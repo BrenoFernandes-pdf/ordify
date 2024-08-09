@@ -1,19 +1,12 @@
-import HomeCard from "@/components/homeCard";
+import HomeCard from "@/components/HomeCard";
 import {
-  Text,
-  Center,
-  Heading,
-  Divider,
-  Link,
-  Button,
-  ButtonText,
-  Box,
-  LinkText,
-  VStack,
-  HStack,
-  ScrollView,
   Avatar,
   AvatarFallbackText,
+  Box,
+  HStack,
+  ScrollView,
+  Text,
+  VStack,
 } from "@gluestack-ui/themed";
 
 export default function Home() {
@@ -21,7 +14,7 @@ export default function Home() {
     <Box flex={1} bg="$white">
       <Box w="$full" bg="#4C1D95" px="$6" pt="$8" pb="$4">
         <HStack justifyContent="space-between" alignItems="center">
-          <Text fontSize="$4xl" color="$white">
+          <Text fontSize="$2xl" color="$white">
             Olá, Fulano
           </Text>
 
