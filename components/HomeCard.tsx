@@ -4,10 +4,11 @@ import {
   Divider,
   Heading,
   HStack,
+  Pressable,
   ScrollView,
   VStack,
 } from "@gluestack-ui/themed";
-import { Href, Link } from "expo-router";
+import { Href, useRouter } from "expo-router";
 import { ArrowRight } from "lucide-react-native";
 import { ReactElement } from "react";
 
@@ -24,6 +25,8 @@ export default function HomeCard({
   path,
   children,
 }: Props) {
+  const router = useRouter();
+
   return (
     <Box>
       <Heading mb="$2" ml="$6" size="md" fontWeight="$bold">
@@ -46,9 +49,13 @@ export default function HomeCard({
                   {title}
                 </Heading>
 
-                <Link href={path}>
+                <Pressable
+                  onPress={() => {
+                    router.push(path);
+                  }}
+                >
                   <ArrowRight color="black" />
-                </Link>
+                </Pressable>
               </HStack>
 
               <Divider />

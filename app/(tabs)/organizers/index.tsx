@@ -59,7 +59,7 @@ export default function Organizers() {
           {organizers.map((organizer) => (
             <Pressable
               onPress={() => {
-                router.push("/organizersInfo" as Href);
+                router.push("/organizers/organizersInfo" as Href);
               }}
               key={organizer.id}
             >
@@ -72,7 +72,7 @@ export default function Organizers() {
           ))}
 
           <Pressable
-            onPress={() => router.push("/createOrganizers" as Href)}
+            onPress={() => router.push("/organizers/createOrganizers" as Href)}
             mx="$4"
             borderColor="#CFD1D4"
             borderStyle="dashed"

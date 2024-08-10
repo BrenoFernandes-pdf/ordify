@@ -1,5 +1,5 @@
-import MainGradient from "../assets/Icons/MainGradient";
 import { Box, Heading, Text, ScrollView } from "@gluestack-ui/themed";
+import { LinearGradient } from "expo-linear-gradient";
 import { ReactElement } from "react";
 
 type Props = {
@@ -11,7 +11,12 @@ export default function AppScreenTemplate({ description, children }: Props) {
   return (
     <Box flex={1} bg="$black">
       <Box position="absolute" h="$full" w="$full">
-        <MainGradient />
+        <LinearGradient
+          colors={["#4C1D95", "#321362", "#18092F"]}
+          start={{ x: 0, y: 0.4 }}
+          end={{ x: 1, y: 0.7 }}
+          style={{ flex: 1 }}
+        />
       </Box>
 
       <Box h="$1/3" w="$full" pl="$5" pb="$8" justifyContent="flex-end">

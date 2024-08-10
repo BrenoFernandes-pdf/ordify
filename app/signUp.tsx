@@ -16,14 +16,16 @@ import {
   HStack,
   Input,
   InputField,
-  LinkText,
+  Pressable,
   Text,
   VStack,
 } from "@gluestack-ui/themed";
-import { Link } from "expo-router";
 import { AlertCircleIcon, CheckIcon } from "lucide-react-native";
+import { useRouter } from "expo-router";
 
 export default function SignUp() {
+  const router = useRouter();
+
   return (
     <AppScreenTemplate description="Crie sua conta">
       <VStack space="4xl">
@@ -139,21 +141,33 @@ export default function SignUp() {
           </CheckboxLabel>
         </Checkbox>
 
-        <Link href="/" asChild>
-          <Button size="lg" bgColor="#4C1D95">
-            <ButtonText fontWeight="$bold">Sign up</ButtonText>
-          </Button>
-        </Link>
+        <Button
+          onPress={() => {
+            router.push("/");
+          }}
+          size="lg"
+          bgColor="#4C1D95"
+        >
+          <ButtonText fontWeight="$bold">Sign up</ButtonText>
+        </Button>
 
         <Box alignItems="center" mb="$8">
           <HStack>
             <Text fontWeight="$medium">Já possui uma conta? </Text>
 
-            <Link href="/">
-              <LinkText fontWeight="$bold" color="#4C1D95">
+            <Pressable
+              onPress={() => {
+                router.push("/");
+              }}
+            >
+              <Text
+                color="#4C1D95"
+                fontWeight="$bold"
+                textDecorationLine="underline"
+              >
                 Sign in
-              </LinkText>
-            </Link>
+              </Text>
+            </Pressable>
           </HStack>
         </Box>
       </VStack>

@@ -18,14 +18,16 @@ import {
   HStack,
   Input,
   InputField,
-  LinkText,
+  Pressable,
   Text,
   VStack,
 } from "@gluestack-ui/themed";
-import { Link } from "expo-router";
 import { AlertCircleIcon, CheckIcon } from "lucide-react-native";
+import { useRouter } from "expo-router";
 
 export default function SignIn() {
+  const router = useRouter();
+
   return (
     <AppScreenTemplate description="Acesse sua conta">
       <VStack space="4xl">
@@ -98,28 +100,49 @@ export default function SignIn() {
             <CheckboxLabel fontSize="$sm">Manter conectado</CheckboxLabel>
           </Checkbox>
 
-          <Link href="/forgotPassword" asChild>
-            <LinkText color="$black" fontSize="$sm" fontWeight="$bold">
+          <Pressable
+            onPress={() => {
+              router.push("/forgotPassword");
+            }}
+          >
+            <Text
+              color="#black"
+              fontSize="$sm"
+              fontWeight="$bold"
+              textDecorationLine="underline"
+            >
               Esqueceu a senha?
-            </LinkText>
-          </Link>
+            </Text>
+          </Pressable>
         </HStack>
 
-        <Link href="/(tabs)" asChild>
-          <Button size="lg" bgColor="#4C1D95">
-            <ButtonText fontWeight="$bold">Sign in</ButtonText>
-          </Button>
-        </Link>
+        <Button
+          onPress={() => {
+            router.push("/home");
+          }}
+          size="lg"
+          bgColor="#4C1D95"
+        >
+          <ButtonText fontWeight="$bold">Sign in</ButtonText>
+        </Button>
 
         <Box alignItems="center">
           <HStack>
             <Text fontWeight="$medium">Não possui uma conta? </Text>
 
-            <Link href="/signUp">
-              <LinkText fontWeight="$bold" color="#4C1D95">
+            <Pressable
+              onPress={() => {
+                router.push("/signUp");
+              }}
+            >
+              <Text
+                color="#4C1D95"
+                fontWeight="$bold"
+                textDecorationLine="underline"
+              >
                 Sign up
-              </LinkText>
-            </Link>
+              </Text>
+            </Pressable>
           </HStack>
         </Box>
       </VStack>
