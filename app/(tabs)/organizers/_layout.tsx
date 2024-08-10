@@ -10,11 +10,11 @@ export default function OrganizersLayout() {
     >
       <Stack.Screen name="index" options={{ title: "Organizadores" }} />
       <Stack.Screen
-        name="createOrganizers"
+        name="createOrganizer"
         options={{ title: "Criar Organizador" }}
       />
       <Stack.Screen
-        name="organizersInfo"
+        name="organizerInfo"
         options={{ title: "Informações do Organizador" }}
       />
     </Stack>

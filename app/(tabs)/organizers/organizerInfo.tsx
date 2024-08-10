@@ -16,7 +16,7 @@ import {
 import { useRouter } from "expo-router";
 import { useState } from "react";
 
-export default function CreateOrganizers() {
+export default function OrganizerInfo() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 

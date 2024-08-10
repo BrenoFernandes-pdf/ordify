@@ -1,9 +1,10 @@
-import { Heading, Center, Divider, Text } from "@gluestack-ui/themed";
+import AppScreenTemplate from "@/components/AppScreenTemplate";
+import { Box } from "@gluestack-ui/themed";
 
 export default function HomeAssistant() {
   return (
-    <Text m="$1/3" color="$white">
-      Assistente Doméstico
-    </Text>
+    <AppScreenTemplate title="Assistente">
+      <Box></Box>
+    </AppScreenTemplate>
   );
 }

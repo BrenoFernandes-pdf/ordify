@@ -1,4 +1,4 @@
-import AppScreenTemplate from "@/components/AppScreenTemplate";
+import StartScreenTemplate from "@/components/StartScreenTemplate";
 import {
   Box,
   Button,
@@ -27,7 +27,7 @@ export default function SignUp() {
   const router = useRouter();
 
   return (
-    <AppScreenTemplate description="Crie sua conta">
+    <StartScreenTemplate description="Crie sua conta">
       <VStack space="4xl">
         <FormControl size="lg" isRequired={true}>
           <FormControlLabel mb="$2">
@@ -171,6 +171,6 @@ export default function SignUp() {
           </HStack>
         </Box>
       </VStack>
-    </AppScreenTemplate>
+    </StartScreenTemplate>
   );
 }

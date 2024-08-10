@@ -11,6 +11,7 @@ import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import { useColorScheme } from "react-native";
 import { Stack } from "expo-router";
+import { UserProvider } from "@/context/UserContext";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -37,18 +38,20 @@ export default function RootLayout() {
   return (
     <GluestackUIProvider config={config}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            animation: "slide_from_right",
-          }}
-        >
-          <Stack.Screen name="index" />
-          {/* <Stack.Screen name="signIn" /> */}
-          <Stack.Screen name="signUp" />
-          <Stack.Screen name="forgotPassword" />
-          <Stack.Screen name="createPassword" />
-        </Stack>
+        <UserProvider>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              animation: "slide_from_right",
+            }}
+          >
+            <Stack.Screen name="index" />
+            {/* <Stack.Screen name="signIn" /> */}
+            <Stack.Screen name="signUp" />
+            <Stack.Screen name="forgotPassword" />
+            <Stack.Screen name="createPassword" />
+          </Stack>
+        </UserProvider>
       </ThemeProvider>
     </GluestackUIProvider>
   );

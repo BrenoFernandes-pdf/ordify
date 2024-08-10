@@ -1,4 +1,4 @@
-import AppScreenTemplate from "@/components/AppScreenTemplate";
+import StartScreenTemplate from "@/components/StartScreenTemplate";
 import {
   Box,
   Button,
@@ -24,12 +24,28 @@ import {
 } from "@gluestack-ui/themed";
 import { AlertCircleIcon, CheckIcon } from "lucide-react-native";
 import { useRouter } from "expo-router";
+import { useUser } from "@/context/UserContext";
 
 export default function SignIn() {
   const router = useRouter();
+  const { setUser } = useUser();
+
+  const handleSignIn = () => {
+    const fakeUser = {
+      id: 1,
+      name: "Victor Chagas",
+      email: "victor@example.com",
+      password: "12345",
+      organizers: [],
+    };
+
+    setUser(fakeUser);
+
+    router.push("/home");
+  };
 
   return (
-    <AppScreenTemplate description="Acesse sua conta">
+    <StartScreenTemplate description="Acesse sua conta">
       <VStack space="4xl">
         <FormControl size="lg" isRequired={true}>
           <FormControlLabel mb="$2">
@@ -116,13 +132,7 @@ export default function SignIn() {
           </Pressable>
         </HStack>
 
-        <Button
-          onPress={() => {
-            router.push("/home");
-          }}
-          size="lg"
-          bgColor="#4C1D95"
-        >
+        <Button onPress={handleSignIn} size="lg" bgColor="#4C1D95">
           <ButtonText fontWeight="$bold">Sign in</ButtonText>
         </Button>
 
@@ -146,6 +156,6 @@ export default function SignIn() {
           </HStack>
         </Box>
       </VStack>
-    </AppScreenTemplate>
+    </StartScreenTemplate>
   );
 }

@@ -1,4 +1,4 @@
-import AppScreenTemplate from "@/components/AppScreenTemplate";
+import StartScreenTemplate from "@/components/StartScreenTemplate";
 import {
   Button,
   ButtonText,
@@ -21,7 +21,7 @@ export default function ForgotPassword() {
   const router = useRouter();
 
   return (
-    <AppScreenTemplate description="Insira seu e-mail">
+    <StartScreenTemplate description="Insira seu e-mail">
       <VStack space="4xl">
         <FormControl size="lg" isRequired={true}>
           <FormControlLabel mb="$2">
@@ -61,6 +61,6 @@ export default function ForgotPassword() {
           <ButtonText fontWeight="$bold">Enviar link</ButtonText>
         </Button>
       </VStack>
-    </AppScreenTemplate>
+    </StartScreenTemplate>
   );
 }

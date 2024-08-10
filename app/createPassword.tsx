@@ -1,4 +1,4 @@
-import AppScreenTemplate from "@/components/AppScreenTemplate";
+import StartScreenTemplate from "@/components/StartScreenTemplate";
 import {
   Button,
   ButtonText,
@@ -21,7 +21,7 @@ export default function CreatePassword() {
   const router = useRouter();
 
   return (
-    <AppScreenTemplate description="Criar nova Senha">
+    <StartScreenTemplate description="Criar nova Senha">
       <VStack space="4xl">
         <FormControl size="lg" isRequired={true}>
           <FormControlLabel mb="$2">
@@ -89,6 +89,6 @@ export default function CreatePassword() {
           <ButtonText fontWeight="$bold">Atualizar Senha</ButtonText>
         </Button>
       </VStack>
-    </AppScreenTemplate>
+    </StartScreenTemplate>
   );
 }

@@ -1,9 +1,12 @@
-import { Heading, Center, Divider, Text } from "@gluestack-ui/themed";
+import AppHeader from "@/components/AppHeader";
+import { Box } from "@gluestack-ui/themed";
 
 export default function Profile() {
   return (
-    <Text m="$1/3" color="$white">
-      Perfil
-    </Text>
+    <Box flex={1} bg="$black">
+      <Box flex={1} bg="$white">
+        <AppHeader title="Perfil" extended />
+      </Box>
+    </Box>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Heading, VStack, Text } from "@gluestack-ui/themed";
+import { Box, Heading, Text } from "@gluestack-ui/themed";
 
 type Props = {
   description: string;
