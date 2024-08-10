@@ -1,4 +1,3 @@
-import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 
@@ -27,7 +26,7 @@ export default function AppLayout() {
       />
 
       <Tabs.Screen
-        name="organizers/index"
+        name="organizers"
         options={{
           title: "Organizadores",
           tabBarIcon: ({ color }) => <TabBarIcon name="star-o" color={color} />,
