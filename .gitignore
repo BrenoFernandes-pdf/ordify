@@ -1,9 +1,6 @@
 # Node
-node_modules
+node_modules/
 
 # Expo
-.expo
+.expo/
 expo-env.d.ts
-
-# TypeScript
-tsconfig.json
