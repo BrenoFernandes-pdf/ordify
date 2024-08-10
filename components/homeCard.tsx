@@ -1,15 +1,14 @@
 import {
-  ArrowRightIcon,
   Box,
   Card,
   Divider,
   Heading,
   HStack,
-  Icon,
   ScrollView,
   VStack,
 } from "@gluestack-ui/themed";
 import { Href, Link } from "expo-router";
+import { ArrowRight } from "lucide-react-native";
 import { ReactElement } from "react";
 
 type Props = {
@@ -48,7 +47,7 @@ export default function HomeCard({
                 </Heading>
 
                 <Link href={path}>
-                  <Icon as={ArrowRightIcon} size="xl" />
+                  <ArrowRight color="black" />
                 </Link>
               </HStack>
 
