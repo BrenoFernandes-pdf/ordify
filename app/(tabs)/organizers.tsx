@@ -1,9 +1,10 @@
 import OrganizerCard from "@/components/OrganizerCard";
+import React, { useState } from "react";
 import {
   Avatar,
   AvatarFallbackText,
   Box,
-  Card,
+  Center,
   Heading,
   HStack,
   Pressable,
@@ -12,9 +13,11 @@ import {
   VStack,
 } from "@gluestack-ui/themed";
 import { Plus } from "lucide-react-native";
+import { Href, useRouter } from "expo-router";
 
 export default function Organizers() {
-  const organizers = [
+  // const [id, setId] = useState(1);
+  const [organizers, setOrganizers] = useState([
     {
       id: 1,
       imagePath:
@@ -22,7 +25,16 @@ export default function Organizers() {
       name: "Nome do organizador",
       description: "Lorem ipsum",
     },
-  ];
+    {
+      id: 2,
+      imagePath:
+        "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      name: "Nome do organizador",
+      description: "Lorem ipsum",
+    },
+  ]);
+
+  const router = useRouter();
 
   return (
     <Box flex={1} bg="$white">
@@ -45,26 +57,31 @@ export default function Organizers() {
       <ScrollView>
         <VStack space="4xl" pt="$2" pb="$6">
           {organizers.map((organizer) => (
-            <OrganizerCard
+            <Pressable
+              onPress={() => {
+                router.push("/organizersInfo" as Href);
+              }}
               key={organizer.id}
-              imagePath={organizer.imagePath}
-              name={organizer.name}
-              description={organizer.description}
-            />
+            >
+              <OrganizerCard
+                imagePath={organizer.imagePath}
+                name={organizer.name}
+                description={organizer.description}
+              />
+            </Pressable>
           ))}
 
-          <Pressable>
-            <Card
-              size="md"
-              mx="$4"
-              variant="outline"
-              justifyContent="center"
-              alignItems="center"
-              borderColor="#CFD1D4"
-              borderStyle="dashed"
-            >
+          <Pressable
+            onPress={() => router.push("/createOrganizers" as Href)}
+            mx="$4"
+            borderColor="#CFD1D4"
+            borderStyle="dashed"
+            borderRadius="$lg"
+            borderWidth={1}
+          >
+            <Center py="$4">
               <Plus size={48} color="#CFD1D4" />
-            </Card>
+            </Center>
           </Pressable>
         </VStack>
       </ScrollView>

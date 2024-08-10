@@ -60,9 +60,13 @@ function RootLayoutNav() {
   return (
     <GluestackUIProvider config={config}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack screenOptions={{ headerShown: false }}>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            animation: "slide_from_right",
+          }}
+        >
           <Stack.Screen name="index" />
-          {/* <Stack.Screen name="signUp" /> */}
         </Stack>
       </ThemeProvider>
     </GluestackUIProvider>

@@ -4,3 +4,4 @@ node_modules
 # Expo
 .expo
 expo-env.d.ts
+tsconfig.json

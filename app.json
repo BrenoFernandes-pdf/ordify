@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "expo-router-v3",
-    "slug": "expo-router-v3",
+    "name": "Ordify",
+    "slug": "Ordify",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
