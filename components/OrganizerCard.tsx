@@ -16,11 +16,7 @@ type Props = {
   description: string;
 };
 
-export default function OrganizersCard({
-  imagePath,
-  name,
-  description,
-}: Props) {
+export default function OrganizerCard({ imagePath, name, description }: Props) {
   const [isFavorited, setIsFavorited] = useState(false);
 
   return (
