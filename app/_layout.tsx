@@ -1,28 +1,20 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import * as SplashScreen from "expo-splash-screen";
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { GluestackUIProvider, Text, Box } from "@gluestack-ui/themed";
+import { useEffect } from "react";
+import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
-import { useColorScheme } from "@/components/useColorScheme";
+import { useColorScheme } from "react-native";
 import { Stack } from "expo-router";
+import { UserProvider } from "@/context/UserContext";
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
+export { ErrorBoundary } from "expo-router";
 
-// export const unstable_settings = {
-//   // Ensure that reloading on `/modal` keeps a back button present.
-//   initialRouteName: "gluestack",
-// };
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -31,8 +23,8 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  const [styleLoaded, setStyleLoaded] = useState(false);
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
+  const colorScheme = useColorScheme();
+
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -43,31 +35,23 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
-  // useLayoutEffect(() => {
-  //   setStyleLoaded(true);
-  // }, [styleLoaded]);
-
-  // if (!loaded || !styleLoaded) {
-  //   return null;
-  // }
-
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-
   return (
     <GluestackUIProvider config={config}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            animation: "slide_from_right",
-          }}
-        >
-          <Stack.Screen name="index" />
-        </Stack>
+        <UserProvider>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              animation: "slide_from_right",
+            }}
+          >
+            <Stack.Screen name="index" />
+            {/* <Stack.Screen name="signIn" /> */}
+            <Stack.Screen name="signUp" />
+            <Stack.Screen name="forgotPassword" />
+            <Stack.Screen name="createPassword" />
+          </Stack>
+        </UserProvider>
       </ThemeProvider>
     </GluestackUIProvider>
   );

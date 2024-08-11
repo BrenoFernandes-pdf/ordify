@@ -1,14 +1,3 @@
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
-
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)",
-};
-
-import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 
@@ -29,7 +18,7 @@ export default function AppLayout() {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="home/index"
         options={{
           title: "Home",
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
@@ -45,7 +34,7 @@ export default function AppLayout() {
       />
 
       <Tabs.Screen
-        name="homeAssistant"
+        name="homeAssistant/index"
         options={{
           title: "Assistente Doméstico",
           tabBarIcon: ({ color }) => <TabBarIcon name="star-o" color={color} />,
@@ -53,7 +42,7 @@ export default function AppLayout() {
       />
 
       <Tabs.Screen
-        name="profile"
+        name="profile/index"
         options={{
           title: "Perfil",
           tabBarIcon: ({ color }) => <TabBarIcon name="star-o" color={color} />,

@@ -1,6 +1,5 @@
-import AppScreenTemplate from "@/components/AppScreenTemplate";
+import StartScreenTemplate from "@/components/StartScreenTemplate";
 import {
-  Box,
   Button,
   ButtonText,
   FormControl,
@@ -15,12 +14,14 @@ import {
   InputField,
   VStack,
 } from "@gluestack-ui/themed";
-import { Link } from "expo-router";
 import { AlertCircleIcon } from "lucide-react-native";
+import { useRouter } from "expo-router";
 
 export default function ForgotPassword() {
+  const router = useRouter();
+
   return (
-    <AppScreenTemplate description="Insira seu e-mail">
+    <StartScreenTemplate description="Insira seu e-mail">
       <VStack space="4xl">
         <FormControl size="lg" isRequired={true}>
           <FormControlLabel mb="$2">
@@ -50,12 +51,16 @@ export default function ForgotPassword() {
           </FormControlError>
         </FormControl>
 
-        <Link href="/createPassword" asChild>
-          <Button size="lg" bgColor="#4C1D95">
-            <ButtonText fontWeight="$bold">Enviar link</ButtonText>
-          </Button>
-        </Link>
+        <Button
+          onPress={() => {
+            router.push("/createPassword");
+          }}
+          size="lg"
+          bgColor="#4C1D95"
+        >
+          <ButtonText fontWeight="$bold">Enviar link</ButtonText>
+        </Button>
       </VStack>
-    </AppScreenTemplate>
+    </StartScreenTemplate>
   );
 }

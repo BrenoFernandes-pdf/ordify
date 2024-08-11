@@ -1,29 +1,13 @@
 import HomeCard from "@/components/HomeCard";
-import {
-  Avatar,
-  AvatarFallbackText,
-  Box,
-  HStack,
-  ScrollView,
-  Text,
-  VStack,
-} from "@gluestack-ui/themed";
+import AppScreenTemplate from "@/components/AppScreenTemplate";
+import { Box, ScrollView, VStack } from "@gluestack-ui/themed";
+import { useUser } from "@/context/UserContext";
 
 export default function Home() {
+  const { user } = useUser();
+
   return (
-    <Box flex={1} bg="$white">
-      <Box w="$full" bg="#4C1D95" px="$6" pt="$8" pb="$4">
-        <HStack justifyContent="space-between" alignItems="center">
-          <Text fontSize="$2xl" color="$white">
-            Olá, Fulano
-          </Text>
-
-          <Avatar bgColor="$amber600" borderRadius="$full">
-            <AvatarFallbackText>Sandeep Srivastava</AvatarFallbackText>
-          </Avatar>
-        </HStack>
-      </Box>
-
+    <AppScreenTemplate title={`Olá, ${user.name}`}>
       <ScrollView>
         <VStack space="4xl" py="$6">
           <HomeCard
@@ -51,6 +35,6 @@ export default function Home() {
           </HomeCard>
         </VStack>
       </ScrollView>
-    </Box>
+    </AppScreenTemplate>
   );
 }
