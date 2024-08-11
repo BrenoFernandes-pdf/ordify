@@ -1,5 +1,7 @@
 import AppScreenTemplate from "@/components/AppScreenTemplate";
 import InfoCard from "@/components/InfoCard";
+import ItemCard from "@/components/ItemCard";
+import ItemModal from "@/components/ItemModal";
 import {
   Box,
   Button,
@@ -14,14 +16,17 @@ import {
   Text,
   VStack,
 } from "@gluestack-ui/themed";
-import { useRouter, useLocalSearchParams } from "expo-router";
+import { Plus } from "lucide-react-native";
+import { Href, useLocalSearchParams, useRouter } from "expo-router";
+import { useState } from "react";
 import { useUser } from "@/context/UserContext";
-import ItemCard from "@/components/ItemCard";
 
 export default function OrganizerInfo() {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { user } = useUser();
+  const { user, removeOrganizer, addItemToOrganizer, removeItemFromOrganizer } =
+    useUser();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const organizer = user?.organizers.find(
     (organizer) => organizer.id === parseInt(id!)
@@ -37,17 +42,19 @@ export default function OrganizerInfo() {
 
   const infos = [organizer.name, organizer.description];
 
-  const handleEdit = () => {
-    // lógica de edição aqui
-  };
-
-  const handleDelete = () => {
-    // lógica de exclusão aqui
+  const handleAddItem = (newItem: any) => {
+    addItemToOrganizer(organizer.id, newItem);
   };
 
   return (
     <AppScreenTemplate title={organizer.name}>
       <ScrollView px="$6">
+        <ItemModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSave={handleAddItem}
+        />
+
         <VStack space="4xl" py="$8">
           <Center>
             <Image
@@ -61,11 +68,24 @@ export default function OrganizerInfo() {
 
           <Center>
             <HStack space="md">
-              <Button size="lg" bgColor="#4C1D95" onPress={handleEdit}>
+              <Button
+                onPress={() =>
+                  router.push(`/organizers/edit/${organizer.id}` as Href)
+                }
+                size="lg"
+                bgColor="#4C1D95"
+              >
                 <ButtonText fontWeight="$bold">Editar</ButtonText>
               </Button>
 
-              <Button size="lg" bgColor="#4C1D95" onPress={handleDelete}>
+              <Button
+                onPress={() => {
+                  router.back();
+                  removeOrganizer(organizer.id);
+                }}
+                size="lg"
+                bgColor="#4C1D95"
+              >
                 <ButtonText fontWeight="$bold">Excluir</ButtonText>
               </Button>
             </HStack>
@@ -86,16 +106,31 @@ export default function OrganizerInfo() {
               Itens guardados
             </Heading>
 
-            {organizer.items?.map((item) => (
+            <VStack space="lg">
+              {organizer.items?.map((item) => (
+                <ItemCard
+                  key={item.id}
+                  name={item.name}
+                  quantity={item.quantity}
+                  onRemove={() =>
+                    removeItemFromOrganizer(organizer.id, item.id)
+                  }
+                />
+              ))}
+
               <Pressable
-                onPress={() => {
-                  // router.push(`/organizers/${organizer.id}` as Href);
-                }}
-                key={item.id}
+                onPress={() => setIsModalOpen(true)}
+                mx="$4"
+                borderColor="#CFD1D4"
+                borderStyle="dashed"
+                borderRadius="$lg"
+                borderWidth={1}
               >
-                <ItemCard name={item.name} quantity={item.quantity} />
+                <Center py="$4">
+                  <Plus size={48} color="#CFD1D4" />
+                </Center>
               </Pressable>
-            ))}
+            </VStack>
           </Box>
         </VStack>
       </ScrollView>

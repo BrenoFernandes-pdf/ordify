@@ -1,5 +1,4 @@
-import React from "react";
-import { Box, Heading, Text } from "@gluestack-ui/themed";
+import { Box, Text } from "@gluestack-ui/themed";
 
 type Props = {
   infos: string[];
@@ -21,7 +20,9 @@ export default function InfoCard({ infos }: Props) {
           borderBottomLeftRadius={index === infos.length - 1 ? "$md" : 0}
           borderBottomRightRadius={index === infos.length - 1 ? "$md" : 0}
         >
-          <Text fontSize="$lg">{info}</Text>
+          <Text fontSize="$lg" fontWeight="$bold">
+            {info}
+          </Text>
         </Box>
       ))}
     </Box>

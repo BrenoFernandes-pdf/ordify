@@ -25,10 +25,13 @@ type UserContextProps = {
   user: User;
   setUser: (user: User) => void;
   addOrganizer: (organizer: Organizer) => void;
+  updateOrganizer: (updatedOrganizer) => void;
+  removeOrganizer: (organizerId: number) => void;
   addItemToOrganizer: (organizerId: number, item: Item) => void;
+  removeItemFromOrganizer: (organizerId: number, itemId: number) => void;
 };
 
-const UserContext = createContext<UserContextProps>(undefined);
+const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User>();
@@ -40,6 +43,24 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         organizers: [...user.organizers, organizer],
       });
     }
+  };
+
+  const updateOrganizer = (updatedOrganizer) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      organizers: prevUser.organizers.map((organizer) =>
+        organizer.id === updatedOrganizer.id ? updatedOrganizer : organizer
+      ),
+    }));
+  };
+
+  const removeOrganizer = (organizerId) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      organizers: prevUser.organizers.filter(
+        (organizer) => organizer.id !== organizerId
+      ),
+    }));
   };
 
   const addItemToOrganizer = (organizerId: number, item: Item) => {
@@ -54,9 +75,32 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const removeItemFromOrganizer = (organizerId: number, itemId: number) => {
+    if (user) {
+      const updatedOrganizers = user.organizers.map((organizer) =>
+        organizer.id === organizerId
+          ? {
+              ...organizer,
+              items: organizer.items.filter((item) => item.id !== itemId),
+            }
+          : organizer
+      );
+
+      setUser({ ...user, organizers: updatedOrganizers });
+    }
+  };
+
   return (
     <UserContext.Provider
-      value={{ user, setUser, addOrganizer, addItemToOrganizer }}
+      value={{
+        user,
+        setUser,
+        addOrganizer,
+        updateOrganizer,
+        removeOrganizer,
+        addItemToOrganizer,
+        removeItemFromOrganizer,
+      }}
     >
       {children}
     </UserContext.Provider>

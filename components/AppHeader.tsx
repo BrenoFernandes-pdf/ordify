@@ -40,7 +40,7 @@ export default function AppHeader({ title, extended }: Props) {
                   {user.name}
                 </Text>
 
-                <Pressable>
+                <Pressable pt="$2">
                   <Pencil color="#FFFFFF" size={20} />
                 </Pressable>
               </HStack>
