@@ -2,13 +2,12 @@ import {
   Avatar,
   AvatarFallbackText,
   Box,
-  Center,
   HStack,
   Pressable,
   Text,
   VStack,
 } from "@gluestack-ui/themed";
-import { useUser } from "@/context/UserContext";
+import { useUserContext } from "@/context/UserContext";
 import { Pencil } from "lucide-react-native";
 
 type Props = {
@@ -17,7 +16,7 @@ type Props = {
 };
 
 export default function AppHeader({ title, extended }: Props) {
-  const { user } = useUser();
+  const { user } = useUserContext();
 
   return (
     <>

@@ -19,18 +19,18 @@ import {
 import { Plus } from "lucide-react-native";
 import { Href, useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
-import { useUser } from "@/context/UserContext";
+import { useUserContext } from "@/context/UserContext";
+import { generateId } from "@/utils/idManager";
 
 export default function OrganizerInfo() {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { user, removeOrganizer, addItemToOrganizer, removeItemFromOrganizer } =
-    useUser();
+  const { user, readOrganizer, deleteOrganizer, createItem, deleteItem } =
+    useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const organizer = user?.organizers.find(
-    (organizer) => organizer.id === parseInt(id!)
-  );
+  const organizerId = parseInt(id!);
+  const organizer = readOrganizer(organizerId);
 
   if (!organizer) {
     return (
@@ -42,8 +42,14 @@ export default function OrganizerInfo() {
 
   const infos = [organizer.name, organizer.description];
 
-  const handleAddItem = (newItem: any) => {
-    addItemToOrganizer(organizer.id, newItem);
+  const handleAddItem = (newItem: { name: string; quantity: number }) => {
+    createItem(organizer.id, {
+      id: generateId("item"),
+      name: newItem.name,
+      quantity: newItem.quantity,
+    });
+
+    setIsModalOpen(false);
   };
 
   return (
@@ -80,8 +86,8 @@ export default function OrganizerInfo() {
 
               <Button
                 onPress={() => {
+                  deleteOrganizer(organizer.id);
                   router.back();
-                  removeOrganizer(organizer.id);
                 }}
                 size="lg"
                 bgColor="#4C1D95"
@@ -107,14 +113,12 @@ export default function OrganizerInfo() {
             </Heading>
 
             <VStack space="lg">
-              {organizer.items?.map((item) => (
+              {organizer.items.map((item) => (
                 <ItemCard
                   key={item.id}
                   name={item.name}
                   quantity={item.quantity}
-                  onRemove={() =>
-                    removeItemFromOrganizer(organizer.id, item.id)
-                  }
+                  onRemove={() => deleteItem(organizer.id, item.id)}
                 />
               ))}
 

@@ -3,18 +3,12 @@ import {
   Button,
   ButtonText,
   FormControl,
-  FormControlError,
-  FormControlErrorIcon,
-  FormControlErrorText,
-  FormControlHelper,
-  FormControlHelperText,
   FormControlLabel,
   FormControlLabelText,
   Input,
   InputField,
   VStack,
 } from "@gluestack-ui/themed";
-import { AlertCircleIcon } from "lucide-react-native";
 import { useRouter } from "expo-router";
 
 export default function ForgotPassword() {
@@ -35,20 +29,6 @@ export default function ForgotPassword() {
               placeholderTextColor="#DBDFE5"
             />
           </Input>
-
-          <FormControlHelper ml="$2">
-            <FormControlHelperText>
-              Insira seu e-mail para a recuração de senha.
-            </FormControlHelperText>
-          </FormControlHelper>
-
-          <FormControlError ml="$2">
-            <FormControlErrorIcon as={AlertCircleIcon} />
-
-            <FormControlErrorText>
-              At least 6 characters are required.
-            </FormControlErrorText>
-          </FormControlError>
         </FormControl>
 
         <Button

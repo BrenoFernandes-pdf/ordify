@@ -15,28 +15,27 @@ import {
 } from "@gluestack-ui/themed";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState, useEffect } from "react";
-import { useUser } from "@/context/UserContext";
+import { useUserContext } from "@/context/UserContext";
 
 export default function EditOrganizer() {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { user, updateOrganizer } = useUser();
+  const { readOrganizer, updateOrganizer } = useUserContext();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [organizer, setOrganizer] = useState<any>(null);
+  const [organizer, setOrganizer] = useState(null);
+
+  const organizerId = parseInt(id!);
 
   useEffect(() => {
-    if (user) {
-      const selectedOrganizer = user.organizers.find(
-        (org) => org.id === parseInt(id!)
-      );
-      if (selectedOrganizer) {
-        setOrganizer(selectedOrganizer);
-        setName(selectedOrganizer.name);
-        setDescription(selectedOrganizer.description);
-      }
+    const selectedOrganizer = readOrganizer(organizerId);
+
+    if (selectedOrganizer) {
+      setOrganizer(selectedOrganizer);
+      setName(selectedOrganizer.name);
+      setDescription(selectedOrganizer.description);
     }
-  }, [user, id]);
+  }, [organizerId, readOrganizer]);
 
   const handleSave = () => {
     if (organizer) {
@@ -47,7 +46,6 @@ export default function EditOrganizer() {
       };
 
       updateOrganizer(updatedOrganizer);
-
       router.back();
     }
   };
@@ -68,7 +66,7 @@ export default function EditOrganizer() {
             <Image
               size="xl"
               source={{
-                uri: organizer.imagePath,
+                uri: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
               }}
               alt="Foto do organizador"
             />

@@ -1,10 +1,10 @@
 import { Box, Heading, Text, ScrollView } from "@gluestack-ui/themed";
 import { LinearGradient } from "expo-linear-gradient";
-import { ReactElement } from "react";
+import { ReactNode } from "react";
 
 type Props = {
   description: string;
-  children: ReactElement;
+  children: ReactNode;
 };
 
 export default function StartScreenTemplate({ description, children }: Props) {

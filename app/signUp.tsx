@@ -8,9 +8,6 @@ import {
   CheckboxIndicator,
   CheckboxLabel,
   FormControl,
-  FormControlError,
-  FormControlErrorIcon,
-  FormControlErrorText,
   FormControlLabel,
   FormControlLabelText,
   HStack,
@@ -20,7 +17,7 @@ import {
   Text,
   VStack,
 } from "@gluestack-ui/themed";
-import { AlertCircleIcon, CheckIcon } from "lucide-react-native";
+import { CheckIcon } from "lucide-react-native";
 import { useRouter } from "expo-router";
 
 export default function SignUp() {
@@ -41,14 +38,6 @@ export default function SignUp() {
               placeholderTextColor="#DBDFE5"
             />
           </Input>
-
-          <FormControlError ml="$2">
-            <FormControlErrorIcon as={AlertCircleIcon} />
-
-            <FormControlErrorText>
-              At least 6 characters are required.
-            </FormControlErrorText>
-          </FormControlError>
         </FormControl>
 
         <FormControl size="lg" isRequired={true}>
@@ -63,14 +52,6 @@ export default function SignUp() {
               placeholderTextColor="#DBDFE5"
             />
           </Input>
-
-          <FormControlError ml="$2">
-            <FormControlErrorIcon as={AlertCircleIcon} />
-
-            <FormControlErrorText>
-              At least 6 characters are required.
-            </FormControlErrorText>
-          </FormControlError>
         </FormControl>
 
         <FormControl size="lg" isRequired={true}>
@@ -85,14 +66,6 @@ export default function SignUp() {
               placeholderTextColor="#DBDFE5"
             />
           </Input>
-
-          <FormControlError ml="$2">
-            <FormControlErrorIcon as={AlertCircleIcon} />
-
-            <FormControlErrorText>
-              At least 6 characters are required.
-            </FormControlErrorText>
-          </FormControlError>
         </FormControl>
 
         <FormControl size="lg" isRequired={true}>
@@ -107,14 +80,6 @@ export default function SignUp() {
               placeholderTextColor="#DBDFE5"
             />
           </Input>
-
-          <FormControlError ml="$2">
-            <FormControlErrorIcon as={AlertCircleIcon} />
-
-            <FormControlErrorText>
-              At least 6 characters are required.
-            </FormControlErrorText>
-          </FormControlError>
         </FormControl>
 
         <Checkbox
