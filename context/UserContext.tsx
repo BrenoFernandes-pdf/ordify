@@ -22,71 +22,156 @@ type User = {
 };
 
 type UserContextProps = {
-  user: User;
+  user: User | null;
   setUser: (user: User) => void;
-  addOrganizer: (organizer: Organizer) => void;
-  updateOrganizer: (updatedOrganizer) => void;
-  removeOrganizer: (organizerId: number) => void;
-  addItemToOrganizer: (organizerId: number, item: Item) => void;
-  removeItemFromOrganizer: (organizerId: number, itemId: number) => void;
+
+  createUser: (user: User) => void;
+  readUser: (userId: number) => User | undefined;
+  updateUser: (updatedUser: User) => void;
+  deleteUser: (userId: number) => void;
+
+  createOrganizer: (organizer: Organizer) => void;
+  readOrganizer: (organizerId: number) => Organizer | undefined;
+  updateOrganizer: (updatedOrganizer: Organizer) => void;
+  deleteOrganizer: (organizerId: number) => void;
+
+  createItem: (organizerId: number, item: Item) => void;
+  readItem: (organizerId: number, itemId: number) => Item | undefined;
+  updateItem: (organizerId: number, updatedItem: Item) => void;
+  deleteItem: (organizerId: number, itemId: number) => void;
 };
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
 
-  const addOrganizer = (organizer: Organizer) => {
+  const createUser = (newUser: User) => {
+    setUsers((prevUsers) => [...prevUsers, newUser]);
+  };
+
+  const readUser = (userId: number): User | undefined => {
+    return users.find((user) => user.id === userId);
+  };
+
+  const updateUser = (updatedUser: User) => {
+    setUsers((prevUsers) =>
+      prevUsers.map((user) => (user.id === updatedUser.id ? updatedUser : user))
+    );
+  };
+
+  const deleteUser = (userId: number) => {
+    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+
+    if (user && user.id === userId) {
+      setUser(null);
+    }
+  };
+
+  const createOrganizer = (newOrganizer: Organizer) => {
     if (user) {
-      setUser({
+      const updatedUser = {
         ...user,
-        organizers: [...user.organizers, organizer],
-      });
+        organizers: [...user.organizers, newOrganizer],
+      };
+
+      setUser(updatedUser);
+      updateUser(updatedUser);
     }
   };
 
-  const updateOrganizer = (updatedOrganizer) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      organizers: prevUser.organizers.map((organizer) =>
-        organizer.id === updatedOrganizer.id ? updatedOrganizer : organizer
-      ),
-    }));
+  const readOrganizer = (organizerId: number): Organizer | undefined => {
+    return user?.organizers.find((organizer) => organizer.id === organizerId);
   };
 
-  const removeOrganizer = (organizerId) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      organizers: prevUser.organizers.filter(
-        (organizer) => organizer.id !== organizerId
-      ),
-    }));
-  };
-
-  const addItemToOrganizer = (organizerId: number, item: Item) => {
+  const updateOrganizer = (updatedOrganizer: Organizer) => {
     if (user) {
-      const updatedOrganizers = user.organizers.map((organizer) =>
-        organizer.id === organizerId
-          ? { ...organizer, items: [...organizer.items, item] }
-          : organizer
-      );
+      const updatedUser = {
+        ...user,
+        organizers: user.organizers.map((organizer) =>
+          organizer.id === updatedOrganizer.id ? updatedOrganizer : organizer
+        ),
+      };
 
-      setUser({ ...user, organizers: updatedOrganizers });
+      setUser(updatedUser);
+      updateUser(updatedUser);
     }
   };
 
-  const removeItemFromOrganizer = (organizerId: number, itemId: number) => {
+  const deleteOrganizer = (organizerId: number) => {
     if (user) {
-      const updatedOrganizers = user.organizers.map((organizer) =>
-        organizer.id === organizerId
-          ? {
-              ...organizer,
-              items: organizer.items.filter((item) => item.id !== itemId),
-            }
-          : organizer
-      );
+      const updatedUser = {
+        ...user,
+        organizers: user.organizers.filter(
+          (organizer) => organizer.id !== organizerId
+        ),
+      };
 
-      setUser({ ...user, organizers: updatedOrganizers });
+      setUser(updatedUser);
+      updateUser(updatedUser);
+    }
+  };
+
+  const createItem = (organizerId: number, newItem: Item) => {
+    if (user) {
+      const updatedUser = {
+        ...user,
+        organizers: user.organizers.map((organizer) =>
+          organizer.id === organizerId
+            ? { ...organizer, items: [...organizer.items, newItem] }
+            : organizer
+        ),
+      };
+
+      setUser(updatedUser);
+      updateUser(updatedUser);
+    }
+  };
+
+  const readItem = (organizerId: number, itemId: number): Item | undefined => {
+    return user?.organizers
+      .find((organizer) => organizer.id === organizerId)
+      ?.items.find((item) => item.id === itemId);
+  };
+
+  const updateItem = (organizerId: number, updatedItem: Item) => {
+    if (user) {
+      const updatedUser = {
+        ...user,
+        organizers: user.organizers.map((organizer) =>
+          organizer.id === organizerId
+            ? {
+                ...organizer,
+                items: organizer.items.map((item) =>
+                  item.id === updatedItem.id ? updatedItem : item
+                ),
+              }
+            : organizer
+        ),
+      };
+
+      setUser(updatedUser);
+      updateUser(updatedUser);
+    }
+  };
+
+  const deleteItem = (organizerId: number, itemId: number) => {
+    if (user) {
+      const updatedUser = {
+        ...user,
+        organizers: user.organizers.map((organizer) =>
+          organizer.id === organizerId
+            ? {
+                ...organizer,
+                items: organizer.items.filter((item) => item.id !== itemId),
+              }
+            : organizer
+        ),
+      };
+
+      setUser(updatedUser);
+      updateUser(updatedUser);
     }
   };
 
@@ -95,11 +180,18 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       value={{
         user,
         setUser,
-        addOrganizer,
+        createUser,
+        readUser,
+        updateUser,
+        deleteUser,
+        createOrganizer,
+        readOrganizer,
         updateOrganizer,
-        removeOrganizer,
-        addItemToOrganizer,
-        removeItemFromOrganizer,
+        deleteOrganizer,
+        createItem,
+        readItem,
+        updateItem,
+        deleteItem,
       }}
     >
       {children}
@@ -107,11 +199,13 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useUser = () => {
+export const useUserContext = () => {
   const context = useContext(UserContext);
 
   if (!context) {
-    throw new Error("useUser deve estar dentro do UserProvider");
+    throw new Error(
+      "useUserContext deve ser utilizado dentro do UserProvider."
+    );
   }
 
   return context;

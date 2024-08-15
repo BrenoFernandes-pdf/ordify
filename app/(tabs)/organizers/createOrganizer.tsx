@@ -20,11 +20,12 @@ import {
 import { Plus } from "lucide-react-native";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { useUser } from "@/context/UserContext";
+import { useUserContext } from "@/context/UserContext";
+import { generateId } from "@/utils/idManager";
 
 export default function CreateOrganizer() {
   const router = useRouter();
-  const { user, addOrganizer } = useUser();
+  const { user, createOrganizer, createItem } = useUserContext();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [items, setItems] = useState([]);
@@ -32,20 +33,14 @@ export default function CreateOrganizer() {
 
   const handleCreate = () => {
     if (user) {
-      const newId = user.organizers.length
-        ? user.organizers[user.organizers.length - 1].id + 1
-        : 1;
-
       const newOrganizer = {
-        id: newId,
-        imagePath:
-          "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+        id: generateId("organizer"),
         name,
         description,
         items,
       };
 
-      addOrganizer(newOrganizer);
+      createOrganizer(newOrganizer);
 
       router.back();
     }
@@ -79,7 +74,7 @@ export default function CreateOrganizer() {
             />
           </Center>
 
-          <FormControl size="lg" isRequired={true}>
+          <FormControl size="lg" isRequired>
             <FormControlLabel mb="$2">
               <FormControlLabelText>Nome</FormControlLabelText>
             </FormControlLabel>
@@ -94,7 +89,7 @@ export default function CreateOrganizer() {
             </Input>
           </FormControl>
 
-          <FormControl size="lg" isRequired={true}>
+          <FormControl size="lg" isRequired>
             <FormControlLabel mb="$2">
               <FormControlLabelText>Descrição</FormControlLabelText>
             </FormControlLabel>
@@ -115,7 +110,7 @@ export default function CreateOrganizer() {
             </Heading>
 
             <VStack space="lg">
-              {items?.map((item) => (
+              {items.map((item) => (
                 <ItemCard
                   key={item.id}
                   name={item.name}

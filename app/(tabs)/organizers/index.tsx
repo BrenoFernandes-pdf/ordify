@@ -9,11 +9,11 @@ import {
 } from "@gluestack-ui/themed";
 import { Plus } from "lucide-react-native";
 import { Href, useRouter } from "expo-router";
-import { useUser } from "@/context/UserContext";
+import { useUserContext } from "@/context/UserContext";
 
 export default function Organizers() {
   const router = useRouter();
-  const { user } = useUser();
+  const { user } = useUserContext();
 
   return (
     <AppScreenTemplate title="Organizadores">

@@ -8,11 +8,6 @@ import {
   CheckboxIndicator,
   CheckboxLabel,
   FormControl,
-  FormControlError,
-  FormControlErrorIcon,
-  FormControlErrorText,
-  FormControlHelper,
-  FormControlHelperText,
   FormControlLabel,
   FormControlLabelText,
   HStack,
@@ -22,24 +17,26 @@ import {
   Text,
   VStack,
 } from "@gluestack-ui/themed";
-import { AlertCircleIcon, CheckIcon } from "lucide-react-native";
+import { CheckIcon } from "lucide-react-native";
 import { useRouter } from "expo-router";
-import { useUser } from "@/context/UserContext";
+import { useUserContext } from "@/context/UserContext";
+import { generateId } from "@/utils/idManager";
 
 export default function SignIn() {
   const router = useRouter();
-  const { setUser } = useUser();
+  const { createUser, readUser, setUser } = useUserContext();
 
   const handleSignIn = () => {
-    const fakeUser = {
-      id: 1,
-      name: "Victor Chagas",
+    const tempUser = {
+      id: generateId("user"),
+      name: "Víctor Chagas",
       email: "victor@example.com",
       password: "12345",
       organizers: [],
     };
 
-    setUser(fakeUser);
+    createUser(tempUser);
+    setUser(tempUser);
 
     router.push("/home");
   };
@@ -59,20 +56,6 @@ export default function SignIn() {
               placeholderTextColor="#DBDFE5"
             />
           </Input>
-
-          <FormControlHelper ml="$2">
-            <FormControlHelperText>
-              Must be at least 6 characters.
-            </FormControlHelperText>
-          </FormControlHelper>
-
-          <FormControlError ml="$2">
-            <FormControlErrorIcon as={AlertCircleIcon} />
-
-            <FormControlErrorText>
-              At least 6 characters are required.
-            </FormControlErrorText>
-          </FormControlError>
         </FormControl>
 
         <FormControl size="lg" isRequired={true}>
@@ -87,20 +70,6 @@ export default function SignIn() {
               placeholderTextColor="#DBDFE5"
             />
           </Input>
-
-          <FormControlHelper ml="$2">
-            <FormControlHelperText>
-              Must be at least 6 characters.
-            </FormControlHelperText>
-          </FormControlHelper>
-
-          <FormControlError ml="$2">
-            <FormControlErrorIcon as={AlertCircleIcon} />
-
-            <FormControlErrorText>
-              At least 6 characters are required.
-            </FormControlErrorText>
-          </FormControlError>
         </FormControl>
 
         <HStack justifyContent="space-between">

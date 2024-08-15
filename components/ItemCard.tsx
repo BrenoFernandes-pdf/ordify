@@ -52,7 +52,7 @@ export default function ItemCard({
   const [itemName, setItemName] = useState(name);
   const [itemQuantity, setItemQuantity] = useState(quantity);
 
-  const infos = [name, `${quantity}`];
+  const infos = [itemName, `${itemQuantity}`];
 
   return (
     <Card
@@ -63,7 +63,13 @@ export default function ItemCard({
       borderWidth={1}
       mx="$4"
     >
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+      <Modal
+        isOpen={showModal}
+        onClose={() => {
+          setShowModal(false);
+          setShowEditForm(false);
+        }}
+      >
         <ModalBackdrop />
 
         <ModalContent>
@@ -86,8 +92,7 @@ export default function ItemCard({
           <ModalBody>
             <Box py="$8">
               {showEditForm ? (
-                <VStack space="4xl" px="$4" py="$6">
-                  {/* {o espaçamento aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa} */}
+                <VStack space="4xl" px="$4">
                   <FormControl size="lg" isRequired={true}>
                     <FormControlLabel mb="$2">
                       <FormControlLabelText>Nome</FormControlLabelText>
@@ -96,6 +101,7 @@ export default function ItemCard({
                     <Input>
                       <InputField
                         type="text"
+                        // value={itemName}
                         placeholder="Nome"
                         placeholderTextColor="#DBDFE5"
                         onChangeText={setItemName}
@@ -111,6 +117,7 @@ export default function ItemCard({
                     <Input>
                       <InputField
                         type="text"
+                        // value={`${itemQuantity}`}
                         placeholder="Quantidade"
                         placeholderTextColor="#DBDFE5"
                         onChangeText={(text) => setItemQuantity(parseInt(text))}
@@ -175,7 +182,7 @@ export default function ItemCard({
 
           <VStack space="md">
             <Text fontWeight="$bold" fontSize="$xl">
-              {name}
+              {itemName}
             </Text>
 
             <HStack space="xs">
@@ -184,7 +191,7 @@ export default function ItemCard({
               </Pressable>
 
               <Text fontWeight="$bold" fontSize="$xl">
-                {quantity}
+                {itemQuantity}
               </Text>
 
               <Pressable>
