@@ -1,5 +1,6 @@
 import AppScreenTemplate from "@/components/AppScreenTemplate";
 import OrganizerCard from "@/components/OrganizerCard";
+import { useUserContext } from "@/context/UserContext";
 import {
   Center,
   Heading,
@@ -9,7 +10,6 @@ import {
 } from "@gluestack-ui/themed";
 import { Plus } from "lucide-react-native";
 import { Href, useRouter } from "expo-router";
-import { useUserContext } from "@/context/UserContext";
 
 export default function Organizers() {
   const router = useRouter();
@@ -30,11 +30,7 @@ export default function Organizers() {
               }}
               key={organizer.id}
             >
-              <OrganizerCard
-                imagePath="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-                name={organizer.name}
-                description={organizer.description}
-              />
+              <OrganizerCard organizer={organizer} />
             </Pressable>
           ))}
 

@@ -10,6 +10,7 @@ type Organizer = {
   id: number;
   name: string;
   description: string;
+  isFavorited: boolean;
   items: Item[];
 };
 
@@ -198,6 +199,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     </UserContext.Provider>
   );
 };
+
+export { Organizer };
 
 export const useUserContext = () => {
   const context = useContext(UserContext);

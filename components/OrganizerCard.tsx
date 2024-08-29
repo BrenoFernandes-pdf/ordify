@@ -8,16 +8,24 @@ import {
   VStack,
 } from "@gluestack-ui/themed";
 import { Star } from "lucide-react-native";
-import { useState } from "react";
+import { Organizer } from "@/context/UserContext";
+import { useUserContext } from "@/context/UserContext";
 
 type Props = {
-  imagePath: string;
-  name: string;
-  description: string;
+  organizer: Organizer;
 };
 
-export default function OrganizerCard({ imagePath, name, description }: Props) {
-  const [isFavorited, setIsFavorited] = useState(false);
+export default function OrganizerCard({ organizer }: Props) {
+  const { updateOrganizer } = useUserContext();
+
+  const toggleFavorite = () => {
+    const updatedOrganizer = {
+      ...organizer,
+      isFavorited: !organizer.isFavorited,
+    };
+
+    updateOrganizer(updatedOrganizer);
+  };
 
   return (
     <Card
@@ -33,31 +41,27 @@ export default function OrganizerCard({ imagePath, name, description }: Props) {
           <Image
             size="sm"
             source={{
-              uri: imagePath,
+              uri: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
             }}
             alt="Foto do organizador"
           />
 
           <VStack space="xs">
             <Text fontWeight="$bold" fontSize="$lg">
-              {name}
+              {organizer.name}
             </Text>
 
             <Text fontWeight="$light" fontSize="$sm">
-              {description}
+              {organizer.description}
             </Text>
           </VStack>
         </HStack>
 
         <Box>
-          <Pressable
-            onPress={() => {
-              setIsFavorited(!isFavorited);
-            }}
-          >
+          <Pressable onPress={toggleFavorite}>
             <Star
-              color={isFavorited ? "#4C1D95" : "black"}
-              fill={isFavorited ? "#4C1D95" : "none"}
+              color={organizer.isFavorited ? "#4C1D95" : "black"}
+              fill={organizer.isFavorited ? "#4C1D95" : "none"}
               strokeWidth={1.25}
             />
           </Pressable>
