@@ -32,7 +32,42 @@ export default function SignIn() {
       name: "Víctor Chagas",
       email: "victor@example.com",
       password: "12345",
-      organizers: [],
+      organizers: [
+        {
+          id: generateId("organizer"),
+          name: "Organizador de Viagem",
+          description: "Organize seus itens para viagens",
+          isFavorited: false,
+          items: [
+            { id: generateId("item"), name: "Passaporte", quantity: 10 },
+            { id: generateId("item"), name: "Mapa", quantity: 10 },
+          ],
+        },
+        {
+          id: generateId("organizer"),
+          name: "Organizador de Trabalho",
+          description: "Gerencie suas tarefas e projetos",
+          isFavorited: false,
+          items: [
+            { id: generateId("item"), name: "Laptop", quantity: 10 },
+            {
+              id: generateId("item"),
+              name: "Caderno de Anotações",
+              quantity: 10,
+            },
+          ],
+        },
+        {
+          id: generateId("organizer"),
+          name: "Organizador de Casa",
+          description: "Organize suas tarefas domésticas",
+          isFavorited: false,
+          items: [
+            { id: generateId("item"), name: "Lista de Compras", quantity: 10 },
+            { id: generateId("item"), name: "Itens de Limpeza", quantity: 10 },
+          ],
+        },
+      ],
     };
 
     createUser(tempUser);

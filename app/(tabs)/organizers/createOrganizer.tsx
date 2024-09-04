@@ -37,6 +37,7 @@ export default function CreateOrganizer() {
         id: generateId("organizer"),
         name,
         description,
+        isFavorited: false,
         items,
       };
 
