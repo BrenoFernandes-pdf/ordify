@@ -51,6 +51,7 @@ export default function Home() {
                           }}
                           alt={organizer.name}
                         />
+
                         <Text fontWeight="$bold" mt="$2" textAlign="center">
                           {organizer.name}
                         </Text>
