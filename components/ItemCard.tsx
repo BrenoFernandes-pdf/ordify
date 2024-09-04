@@ -1,4 +1,5 @@
 import InfoCard from "@/components/InfoCard";
+import DeleteModal from "@/components/DeleteModal";
 import {
   Box,
   Button,
@@ -38,16 +39,17 @@ type Props = {
   name: string;
   quantity: number;
   isCreating?: boolean;
-  onRemove: () => void;
+  onDelete: () => void;
 };
 
 export default function ItemCard({
   name,
   quantity,
   isCreating,
-  onRemove,
+  onDelete,
 }: Props) {
-  const [showModal, setShowModal] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [itemName, setItemName] = useState(name);
   const [itemQuantity, setItemQuantity] = useState(quantity);
@@ -64,9 +66,9 @@ export default function ItemCard({
       mx="$4"
     >
       <Modal
-        isOpen={showModal}
+        isOpen={showInfoModal}
         onClose={() => {
-          setShowModal(false);
+          setShowInfoModal(false);
           setShowEditForm(false);
         }}
       >
@@ -101,7 +103,7 @@ export default function ItemCard({
                     <Input>
                       <InputField
                         type="text"
-                        // value={itemName}
+                        value={itemName}
                         placeholder="Nome"
                         placeholderTextColor="#DBDFE5"
                         onChangeText={setItemName}
@@ -170,6 +172,13 @@ export default function ItemCard({
         </ModalContent>
       </Modal>
 
+      <DeleteModal
+        name="item"
+        showDeleteModal={showDeleteModal}
+        setShowDeleteModal={setShowDeleteModal}
+        onDelete={onDelete}
+      />
+
       <HStack justifyContent="space-between">
         <HStack space="md">
           <Image
@@ -202,11 +211,11 @@ export default function ItemCard({
         </HStack>
 
         <HStack space="md">
-          <Pressable onPress={onRemove}>
+          <Pressable onPress={() => setShowDeleteModal(true)}>
             <Trash size={20} color="#000000" />
           </Pressable>
 
-          <Pressable onPress={() => setShowModal(true)}>
+          <Pressable onPress={() => setShowInfoModal(true)}>
             <Info size={20} color="#000000" />
           </Pressable>
         </HStack>

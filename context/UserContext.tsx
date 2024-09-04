@@ -1,3 +1,4 @@
+import { releaseId } from "@/utils/idManager";
 import { createContext, ReactNode, useContext, useState } from "react";
 
 type Item = {
@@ -68,6 +69,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     if (user && user.id === userId) {
       setUser(null);
     }
+
+    releaseId("user", userId);
   };
 
   const createOrganizer = (newOrganizer: Organizer) => {
@@ -109,6 +112,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         ),
       };
 
+      releaseId("organizer", organizerId);
       setUser(updatedUser);
       updateUser(updatedUser);
     }
@@ -171,6 +175,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         ),
       };
 
+      releaseId("item", itemId);
       setUser(updatedUser);
       updateUser(updatedUser);
     }

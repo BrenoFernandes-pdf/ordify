@@ -1,4 +1,5 @@
 import AppScreenTemplate from "@/components/AppScreenTemplate";
+import DeleteModal from "@/components/DeleteModal";
 import InfoCard from "@/components/InfoCard";
 import ItemCard from "@/components/ItemCard";
 import ItemModal from "@/components/ItemModal";
@@ -25,9 +26,10 @@ import { generateId } from "@/utils/idManager";
 export default function OrganizerInfo() {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { user, readOrganizer, deleteOrganizer, createItem, deleteItem } =
+  const { readOrganizer, deleteOrganizer, createItem, deleteItem } =
     useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const organizerId = parseInt(id!);
   const organizer = readOrganizer(organizerId);
@@ -52,6 +54,11 @@ export default function OrganizerInfo() {
     setIsModalOpen(false);
   };
 
+  const handleDeleteOrganizer = () => {
+    deleteOrganizer(organizer.id);
+    router.back();
+  };
+
   return (
     <AppScreenTemplate title={organizer.name}>
       <ScrollView px="$6">
@@ -59,6 +66,13 @@ export default function OrganizerInfo() {
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onSave={handleAddItem}
+        />
+
+        <DeleteModal
+          name="organizador"
+          showDeleteModal={showDeleteModal}
+          setShowDeleteModal={setShowDeleteModal}
+          onDelete={handleDeleteOrganizer}
         />
 
         <VStack space="4xl" py="$8">
@@ -85,10 +99,7 @@ export default function OrganizerInfo() {
               </Button>
 
               <Button
-                onPress={() => {
-                  deleteOrganizer(organizer.id);
-                  router.back();
-                }}
+                onPress={() => setShowDeleteModal(true)}
                 size="lg"
                 bgColor="#4C1D95"
               >
@@ -118,7 +129,7 @@ export default function OrganizerInfo() {
                   key={item.id}
                   name={item.name}
                   quantity={item.quantity}
-                  onRemove={() => deleteItem(organizer.id, item.id)}
+                  onDelete={() => deleteItem(organizer.id, item.id)}
                 />
               ))}
 

@@ -25,7 +25,7 @@ import { generateId } from "@/utils/idManager";
 
 export default function CreateOrganizer() {
   const router = useRouter();
-  const { user, createOrganizer, createItem } = useUserContext();
+  const { user, createOrganizer } = useUserContext();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [items, setItems] = useState([]);
@@ -117,7 +117,7 @@ export default function CreateOrganizer() {
                   name={item.name}
                   quantity={item.quantity}
                   isCreating
-                  onRemove={() => handleRemoveItem(item.id)}
+                  onDelete={() => handleRemoveItem(item.id)}
                 />
               ))}
 
