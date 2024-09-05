@@ -2,6 +2,7 @@ const idStorage: Record<string, Set<number>> = {
   user: new Set(),
   organizer: new Set(),
   item: new Set(),
+  event: new Set(),
 };
 
 const getNextId = (type: string): number => {
@@ -14,7 +15,9 @@ const getNextId = (type: string): number => {
   return id;
 };
 
-export const generateId = (type: "user" | "organizer" | "item"): number => {
+export const generateId = (
+  type: "user" | "organizer" | "item" | "event"
+): number => {
   const id = getNextId(type);
 
   idStorage[type].add(id);
@@ -23,7 +26,7 @@ export const generateId = (type: "user" | "organizer" | "item"): number => {
 };
 
 export const releaseId = (
-  type: "user" | "organizer" | "item",
+  type: "user" | "organizer" | "item" | "event",
   id: number
 ): void => {
   idStorage[type].delete(id);

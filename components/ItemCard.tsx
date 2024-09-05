@@ -75,12 +75,12 @@ export default function ItemCard({
         <ModalBackdrop />
 
         <ModalContent>
-          <ModalHeader bg="#4C1D95" h="$40" position="relative">
+          <ModalHeader bg="#4C1D95" position="relative">
             <ModalCloseButton position="absolute" top="$2" right="$2">
               <X size={24} color="#FFFFFF" strokeWidth={2} />
             </ModalCloseButton>
 
-            <Box flex={1} alignItems="center">
+            <Box flex={1} py="$4" alignItems="center">
               <Image
                 size="lg"
                 source={{

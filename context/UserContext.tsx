@@ -15,12 +15,20 @@ type Organizer = {
   items: Item[];
 };
 
+type Event = {
+  id: number;
+  name: string;
+  description: string;
+  eventType: string;
+};
+
 type User = {
   id: number;
   name: string;
   email: string;
   password: string;
   organizers: Organizer[];
+  events: Event[];
 };
 
 type UserContextProps = {
@@ -41,6 +49,11 @@ type UserContextProps = {
   readItem: (organizerId: number, itemId: number) => Item | undefined;
   updateItem: (organizerId: number, updatedItem: Item) => void;
   deleteItem: (organizerId: number, itemId: number) => void;
+
+  createEvent: (event: Event) => void;
+  readEvent: (eventId: number) => Event | undefined;
+  updateEvent: (updatedEvent: Event) => void;
+  deleteEvent: (eventId: number) => void;
 };
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -181,6 +194,49 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const createEvent = (newEvent: Event) => {
+    if (user) {
+      const updatedUser = {
+        ...user,
+        events: [...user.events, newEvent],
+      };
+
+      setUser(updatedUser);
+      updateUser(updatedUser);
+    }
+  };
+
+  const readEvent = (eventId: number): Event | undefined => {
+    return user?.events.find((event) => event.id === eventId);
+  };
+
+  const updateEvent = (updatedEvent: Event) => {
+    if (user) {
+      const updatedUser = {
+        ...user,
+        events: user.events.map((event) =>
+          event.id === updatedEvent.id ? updatedEvent : event
+        ),
+      };
+
+      setUser(updatedUser);
+      updateUser(updatedUser);
+    }
+  };
+
+  const deleteEvent = (eventId: number) => {
+    if (user) {
+      const updatedUser = {
+        ...user,
+        events: user.events.filter((event) => event.id !== eventId),
+      };
+
+      releaseId("event", eventId);
+      setUser(updatedUser);
+      updateUser(updatedUser);
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -198,6 +254,10 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         readItem,
         updateItem,
         deleteItem,
+        createEvent,
+        readEvent,
+        updateEvent,
+        deleteEvent,
       }}
     >
       {children}
