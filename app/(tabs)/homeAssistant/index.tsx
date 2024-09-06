@@ -27,9 +27,11 @@ export default function HomeAssistant() {
           {user?.events?.map((event) => (
             <Pressable key={event.id}>
               <EventCard
+                id={event.id}
                 name={event.name}
                 description={event.description}
                 eventType={event.eventType}
+                date={event.date}
                 onDelete={() => deleteEvent(event.id)}
               />
             </Pressable>

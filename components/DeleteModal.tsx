@@ -38,7 +38,7 @@ export default function DeleteModal({
         <ModalHeader>
           <Heading size="lg">Excluir {name}?</Heading>
           <ModalCloseButton>
-            <X size={24} color="#FFFFFF" strokeWidth={2} />
+            <X size={24} color="#000000" strokeWidth={2} />
           </ModalCloseButton>
         </ModalHeader>
         <ModalBody>

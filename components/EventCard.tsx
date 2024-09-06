@@ -1,6 +1,8 @@
 import DeleteModal from "@/components/DeleteModal";
 import InfoCard from "@/components/InfoCard";
 import GetIcon from "@/components/GetIcon";
+import { isValidDate } from "@/utils/dateValidator";
+import { useUserContext } from "@/context/UserContext";
 import {
   Box,
   Button,
@@ -27,25 +29,52 @@ import { useState } from "react";
 import { ExternalLink, Pencil, Trash, X } from "lucide-react-native";
 
 type EventProps = {
+  id: number;
   name: string;
   description: string;
   eventType: string;
+  date: string;
   onDelete: () => void;
 };
 
 export default function EventCard({
+  id,
   name,
   description,
   eventType,
+  date,
   onDelete,
 }: EventProps) {
+  const { updateEvent } = useUserContext();
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [eventName, setEventName] = useState(name);
   const [eventDescription, setEventDescription] = useState(description);
+  const [eventDate, setEventDate] = useState(date);
+  const [dateError, setDateError] = useState(false);
 
-  const infos = [eventName, eventDescription];
+  const infos = [eventName, eventDescription, date];
+
+  const handleSubmit = () => {
+    if (!isValidDate(eventDate)) {
+      setDateError(true);
+
+      return;
+    }
+
+    const updatedEvent = {
+      id: id,
+      name: eventName,
+      description: eventDescription,
+      eventType,
+      date: eventDate,
+    };
+
+    updateEvent(updatedEvent);
+    setDateError(false);
+    setShowEditForm(false);
+  };
 
   return (
     <Pressable onPress={() => setShowInfoModal(true)}>
@@ -121,12 +150,26 @@ export default function EventCard({
                       </Input>
                     </FormControl>
 
+                    <FormControl size="lg" isRequired={true}>
+                      <FormControlLabel mb="$2">
+                        <FormControlLabelText>
+                          Data do evento
+                        </FormControlLabelText>
+                      </FormControlLabel>
+
+                      <Input>
+                        <InputField
+                          type="text"
+                          value={eventDate}
+                          placeholder="DD/MM/YYYY"
+                          placeholderTextColor="#DBDFE5"
+                          onChangeText={setEventDate}
+                        />
+                      </Input>
+                    </FormControl>
+
                     <Box alignItems="center">
-                      <Button
-                        w="$1/2"
-                        onPress={() => setShowEditForm(false)}
-                        bgColor="#4C1D95"
-                      >
+                      <Button w="$1/2" onPress={handleSubmit} bgColor="#4C1D95">
                         <ButtonText>Salvar</ButtonText>
                       </Button>
                     </Box>

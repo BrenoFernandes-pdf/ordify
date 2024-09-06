@@ -1,5 +1,6 @@
 import { useUserContext } from "@/context/UserContext";
 import { generateId } from "@/utils/idManager";
+import { isValidDate, formatDate } from "@/utils/dateValidator";
 import {
   Box,
   Button,
@@ -13,7 +14,6 @@ import {
   ModalBackdrop,
   ModalBody,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalCloseButton,
   Select,
@@ -45,19 +45,30 @@ export default function CreateEventModal({
   const { createEvent } = useUserContext();
   const [eventName, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
+  const [eventDate, setEventDate] = useState("");
   const [selectedEventType, setSelectedEventType] = useState("");
+  const [dateError, setDateError] = useState(false);
 
   const handleSubmit = () => {
+    if (!isValidDate(eventDate)) {
+      setDateError(true);
+
+      return;
+    }
+
     createEvent({
       id: generateId("event"),
       name: eventName,
       description: eventDescription,
       eventType: selectedEventType,
+      date: formatDate(eventDate) || "",
     });
 
     setEventName("");
     setEventDescription("");
+    setEventDate("");
     setSelectedEventType("");
+    setDateError(false);
     onClose();
   };
 
@@ -113,16 +124,32 @@ export default function CreateEventModal({
 
               <FormControl size="lg" isRequired={true}>
                 <FormControlLabel mb="$2">
+                  <FormControlLabelText>Data do evento</FormControlLabelText>
+                </FormControlLabel>
+
+                <Input>
+                  <InputField
+                    type="text"
+                    value={eventDate}
+                    placeholder="DD/MM/YYYY"
+                    placeholderTextColor="#DBDFE5"
+                    onChangeText={setEventDate}
+                  />
+                </Input>
+              </FormControl>
+
+              <FormControl size="lg" isRequired={true}>
+                <FormControlLabel mb="$2">
                   <FormControlLabelText>Tipo do evento</FormControlLabelText>
                 </FormControlLabel>
 
                 <Select
                   onValueChange={(itemValue) => setSelectedEventType(itemValue)}
                 >
-                  <SelectTrigger variant="outline" size="md">
+                  <SelectTrigger pr="$3" variant="outline" size="md">
                     <SelectInput placeholder="Selecione o tipo do evento" />
 
-                    <SelectIcon mr="$3">
+                    <SelectIcon>
                       <Icon as={ChevronDownIcon} />
                     </SelectIcon>
                   </SelectTrigger>

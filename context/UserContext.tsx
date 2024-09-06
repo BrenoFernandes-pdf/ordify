@@ -20,6 +20,7 @@ type Event = {
   name: string;
   description: string;
   eventType: string;
+  date: string;
 };
 
 type User = {
@@ -266,6 +267,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export { Organizer };
+export { Event };
 
 export const useUserContext = () => {
   const context = useContext(UserContext);
