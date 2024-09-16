@@ -1,4 +1,6 @@
 import StartScreenTemplate from "@/components/StartScreenTemplate";
+import { generateId } from "@/utils/idManager";
+import { useUserContext } from "@/context/UserContext";
 import {
   Box,
   Button,
@@ -19,8 +21,6 @@ import {
 } from "@gluestack-ui/themed";
 import { CheckIcon } from "lucide-react-native";
 import { useRouter } from "expo-router";
-import { useUserContext } from "@/context/UserContext";
-import { generateId } from "@/utils/idManager";
 
 export default function SignIn() {
   const router = useRouter();
@@ -66,6 +66,50 @@ export default function SignIn() {
             { id: generateId("item"), name: "Lista de Compras", quantity: 10 },
             { id: generateId("item"), name: "Itens de Limpeza", quantity: 10 },
           ],
+        },
+      ],
+      events: [
+        {
+          id: generateId("event"),
+          name: "Evento 1",
+          description: "Urgente precisa ir logo lorem lorem lprem lorem",
+          eventType: "Consulta Médica",
+          date: "10/09/2024",
+        },
+        {
+          id: generateId("event"),
+          name: "Evento 2",
+          description: "Urgente precisa ir logo lorem lorem lprem lorem",
+          eventType: "Consulta Médica",
+          date: "11/09/2024",
+        },
+        {
+          id: generateId("event"),
+          name: "Evento 3",
+          description: "Urgente precisa ir logo lorem lorem lprem lorem",
+          eventType: "Consulta Médica",
+          date: "12/09/2024",
+        },
+        {
+          id: generateId("event"),
+          name: "Evento 4",
+          description: "Urgente precisa ir logo lorem lorem lprem lorem",
+          eventType: "Consulta Médica",
+          date: "13/09/2024",
+        },
+        {
+          id: generateId("event"),
+          name: "Evento 5",
+          description: "Urgente precisa ir logo lorem lorem lprem lorem",
+          eventType: "Consulta Médica",
+          date: "10/09/2025",
+        },
+        {
+          id: generateId("event"),
+          name: "Evento 7",
+          description: "Expirado",
+          eventType: "ADAW",
+          date: "11/02/2002",
         },
       ],
     };
