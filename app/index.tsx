@@ -37,22 +37,42 @@ export default function SignIn() {
           id: generateId("organizer"),
           name: "Organizador de Viagem",
           description: "Organize seus itens para viagens",
+          image:
+            "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
           isFavorited: false,
           items: [
-            { id: generateId("item"), name: "Passaporte", quantity: 10 },
-            { id: generateId("item"), name: "Mapa", quantity: 10 },
+            {
+              id: generateId("item"),
+              name: "Passaporte",
+              image: "https://placehold.co/400",
+              quantity: 10,
+            },
+            {
+              id: generateId("item"),
+              name: "Mapa",
+              image: "https://placehold.co/400",
+              quantity: 10,
+            },
           ],
         },
         {
           id: generateId("organizer"),
           name: "Organizador de Trabalho",
           description: "Gerencie suas tarefas e projetos",
+          image:
+            "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
           isFavorited: false,
           items: [
-            { id: generateId("item"), name: "Laptop", quantity: 10 },
+            {
+              id: generateId("item"),
+              name: "Laptop",
+              image: "https://placehold.co/400",
+              quantity: 10,
+            },
             {
               id: generateId("item"),
               name: "Caderno de Anotações",
+              image: "https://placehold.co/400",
               quantity: 10,
             },
           ],
@@ -61,10 +81,22 @@ export default function SignIn() {
           id: generateId("organizer"),
           name: "Organizador de Casa",
           description: "Organize suas tarefas domésticas",
+          image:
+            "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
           isFavorited: false,
           items: [
-            { id: generateId("item"), name: "Lista de Compras", quantity: 10 },
-            { id: generateId("item"), name: "Itens de Limpeza", quantity: 10 },
+            {
+              id: generateId("item"),
+              name: "Lista de Compras",
+              image: "https://placehold.co/400",
+              quantity: 10,
+            },
+            {
+              id: generateId("item"),
+              name: "Itens de Limpeza",
+              image: "https://placehold.co/400",
+              quantity: 10,
+            },
           ],
         },
       ],

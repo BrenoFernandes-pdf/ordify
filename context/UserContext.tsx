@@ -4,6 +4,7 @@ import { createContext, ReactNode, useContext, useState } from "react";
 type Item = {
   id: number;
   name: string;
+  image: string;
   quantity: number;
 };
 
@@ -11,6 +12,7 @@ type Organizer = {
   id: number;
   name: string;
   description: string;
+  image: string;
   isFavorited: boolean;
   items: Item[];
 };
@@ -268,6 +270,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
 export { Organizer };
 export { Event };
+export { Item };
 
 export const useUserContext = () => {
   const context = useContext(UserContext);
