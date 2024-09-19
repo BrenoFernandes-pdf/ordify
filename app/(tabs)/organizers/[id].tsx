@@ -26,7 +26,7 @@ import { generateId } from "@/utils/idManager";
 export default function OrganizerInfo() {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { readOrganizer, deleteOrganizer, createItem, deleteItem } =
+  const { readOrganizer, deleteOrganizer, createItem, deleteItem, updateItem } =
     useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -62,6 +62,10 @@ export default function OrganizerInfo() {
   const handleDeleteOrganizer = () => {
     deleteOrganizer(organizer.id);
     router.back();
+  };
+
+  const handleItemSave = (updatedItem) => {
+    updateItem(organizerId, updatedItem);
   };
 
   return (
@@ -134,6 +138,7 @@ export default function OrganizerInfo() {
                   key={item.id}
                   item={item}
                   onDelete={() => deleteItem(organizer.id, item.id)}
+                  onSave={handleItemSave}
                 />
               ))}
 

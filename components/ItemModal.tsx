@@ -71,7 +71,13 @@ export default function ItemModal({ isOpen, onClose, onSave }: Props) {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={() => {
+        setImage(null);
+        onClose();
+      }}
+    >
       <ModalBackdrop />
 
       <ModalContent>

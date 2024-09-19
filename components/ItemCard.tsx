@@ -41,9 +41,15 @@ type Props = {
   item: Item;
   isCreating?: boolean;
   onDelete: () => void;
+  onSave: (updatedItem) => void;
 };
 
-export default function ItemCard({ item, isCreating, onDelete }: Props) {
+export default function ItemCard({
+  item,
+  isCreating,
+  onDelete,
+  onSave,
+}: Props) {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
@@ -53,10 +59,6 @@ export default function ItemCard({ item, isCreating, onDelete }: Props) {
   const [quantity, setQuantity] = useState(item.quantity);
 
   const infos = [name, `${quantity}`];
-
-  const handleSaveChanges = () => {
-    setShowEditForm(false);
-  };
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -68,7 +70,18 @@ export default function ItemCard({ item, isCreating, onDelete }: Props) {
 
     if (!result.canceled) {
       setEditedImage(result.assets[0].uri);
+    } else {
+      setEditedImage(image);
     }
+  };
+
+  const handleSaveChanges = () => {
+    setImage(editedImage);
+
+    const updatedItem = { ...item, name, image: editedImage, quantity };
+
+    onSave(updatedItem);
+    setShowEditForm(false);
   };
 
   return (
@@ -85,6 +98,7 @@ export default function ItemCard({ item, isCreating, onDelete }: Props) {
         onClose={() => {
           setShowInfoModal(false);
           setShowEditForm(false);
+          setEditedImage(image);
         }}
       >
         <ModalBackdrop />
