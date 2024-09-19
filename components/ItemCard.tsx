@@ -84,6 +84,30 @@ export default function ItemCard({
     setShowEditForm(false);
   };
 
+  const handleUpdateQuantity = (newQuantity: number) => {
+    const updatedItem = { ...item, quantity: newQuantity };
+
+    onSave(updatedItem);
+  };
+
+  const handleDecrement = () => {
+    if (quantity > 0 && !isNaN(quantity)) {
+      const newQuantity = quantity - 1;
+
+      setQuantity(newQuantity);
+      handleUpdateQuantity(newQuantity);
+    }
+  };
+
+  const handleIncrement = () => {
+    if (!isNaN(quantity)) {
+      const newQuantity = quantity + 1;
+
+      setQuantity(newQuantity);
+      handleUpdateQuantity(newQuantity);
+    }
+  };
+
   return (
     <Card
       size="md"
@@ -160,10 +184,17 @@ export default function ItemCard({
                     <Input>
                       <InputField
                         type="text"
-                        // value={`${quantity}`}
+                        value={quantity ? quantity.toString() : ""}
                         placeholder="Quantidade"
                         placeholderTextColor="#DBDFE5"
-                        onChangeText={(text) => setQuantity(parseInt(text))}
+                        onChangeText={(text) => {
+                          const parsed = parseInt(text);
+
+                          if (!isNaN(parsed)) {
+                            setQuantity(parsed);
+                            handleUpdateQuantity(parsed);
+                          }
+                        }}
                       />
                     </Input>
                   </FormControl>
@@ -236,7 +267,7 @@ export default function ItemCard({
             </Text>
 
             <HStack space="xs">
-              <Pressable>
+              <Pressable onPress={handleDecrement}>
                 <Minus size={20} color="#000000" />
               </Pressable>
 
@@ -244,7 +275,7 @@ export default function ItemCard({
                 {quantity}
               </Text>
 
-              <Pressable>
+              <Pressable onPress={handleIncrement}>
                 <Plus size={20} color="#000000" />
               </Pressable>
             </HStack>

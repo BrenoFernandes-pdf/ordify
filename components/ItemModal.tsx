@@ -39,10 +39,13 @@ export default function ItemModal({ isOpen, onClose, onSave }: Props) {
   const [image, setImage] = useState<string | null>(null);
 
   const handleSave = () => {
+    const parsedQuantity = parseInt(quantity);
+    const finalQuantity = isNaN(parsedQuantity) ? 0 : parsedQuantity;
+
     const newItem = {
       id: generateId("item"),
       name,
-      quantity: parseInt(quantity),
+      quantity: finalQuantity,
       image:
         image ||
         "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
