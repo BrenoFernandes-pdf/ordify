@@ -1,4 +1,5 @@
 import AppScreenTemplate from "@/components/AppScreenTemplate";
+import AppFab from "@/components/AppFab";
 import DeleteModal from "@/components/DeleteModal";
 import GetIcon from "@/components/GetIcon";
 import HomeCard from "@/components/HomeCard";
@@ -57,7 +58,7 @@ export default function Home() {
   return (
     <AppScreenTemplate title={`Olá, ${user.name}`}>
       <ScrollView>
-        <VStack space="4xl" py="$6">
+        <VStack space="4xl" pt="$6" pb="$8">
           <HomeCard
             description="Confira seus organizadores"
             title="Destaques"
@@ -188,6 +189,8 @@ export default function Home() {
         setShowDeleteModal={setShowDeleteModal}
         onDelete={handleDelete}
       />
+
+      <AppFab />
     </AppScreenTemplate>
   );
 }
