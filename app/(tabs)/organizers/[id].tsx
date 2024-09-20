@@ -3,6 +3,9 @@ import DeleteModal from "@/components/DeleteModal";
 import InfoCard from "@/components/InfoCard";
 import ItemCard from "@/components/ItemCard";
 import ItemModal from "@/components/ItemModal";
+import { generateId } from "@/utils/idManager";
+import { encodeIdToHash } from "@/utils/hashDecoder";
+import { useUserContext } from "@/context/UserContext";
 import {
   Box,
   Button,
@@ -12,16 +15,26 @@ import {
   Heading,
   HStack,
   Image,
+  Modal,
+  ModalBackdrop,
+  ModalBody,
+  ModalContent,
+  ModalCloseButton,
+  ModalFooter,
+  ModalHeader,
   Pressable,
   ScrollView,
   Text,
   VStack,
 } from "@gluestack-ui/themed";
-import { Plus } from "lucide-react-native";
+import { Plus, QrCode, Download, Share2, X } from "lucide-react-native";
 import { Href, useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
-import { useUserContext } from "@/context/UserContext";
-import { generateId } from "@/utils/idManager";
+import { captureRef } from "react-native-view-shot";
+import QRCode from "react-native-qrcode-svg";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
+import { Platform } from "react-native";
 
 export default function OrganizerInfo() {
   const router = useRouter();
@@ -30,6 +43,8 @@ export default function OrganizerInfo() {
     useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showQRCode, setShowQRCode] = useState(false);
+  const [qrCodeRef, setQrCodeRef] = useState(null);
 
   const organizerId = parseInt(id!);
   const organizer = readOrganizer(organizerId);
@@ -68,6 +83,70 @@ export default function OrganizerInfo() {
     updateItem(organizerId, updatedItem);
   };
 
+  const handleDownloadQRCode = async () => {
+    if (qrCodeRef) {
+      try {
+        const uri = await captureRef(qrCodeRef, {
+          format: "png",
+          quality: 1,
+        });
+
+        const fileName = `qrcode_${organizer.name}.png`;
+
+        // Verificar se é Android e salvar na pasta de Downloads
+        if (Platform.OS === "android") {
+          // Usar StorageAccessFramework para salvar na pasta de Downloads
+          const permissions =
+            await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+
+          if (permissions.granted) {
+            const downloadDir = `${permissions.directoryUri}/${fileName}`;
+
+            // Converter a URI da imagem capturada para Base64
+            const base64 = await FileSystem.readAsStringAsync(uri, {
+              encoding: FileSystem.EncodingType.Base64,
+            });
+
+            // Salvar o arquivo na pasta de Downloads pública
+            await FileSystem.StorageAccessFramework.createFileAsync(
+              permissions.directoryUri,
+              fileName,
+              "image/png"
+            ).then(async (uri) => {
+              await FileSystem.writeAsStringAsync(uri, base64, {
+                encoding: FileSystem.EncodingType.Base64,
+              });
+              alert(`QR Code salvo com sucesso em: ${uri}`);
+            });
+          } else {
+            alert("Permissão para acessar a pasta de Downloads negada.");
+          }
+        } else {
+          // iOS não permite salvar diretamente na pasta de Downloads
+          const cacheDir = `${FileSystem.cacheDirectory}${fileName}`;
+          await FileSystem.writeAsStringAsync(cacheDir, uri, {
+            encoding: FileSystem.EncodingType.Base64,
+          });
+
+          await Sharing.shareAsync(cacheDir);
+        }
+      } catch (error) {
+        console.error("Erro ao salvar o QR Code: ", error);
+      }
+    }
+  };
+
+  const handleShareQRCode = async () => {
+    if (qrCodeRef) {
+      const uri = await captureRef(qrCodeRef, {
+        format: "png",
+        quality: 1,
+      });
+
+      await Sharing.shareAsync(uri);
+    }
+  };
+
   return (
     <AppScreenTemplate title={organizer.name}>
       <ScrollView px="$6">
@@ -84,7 +163,57 @@ export default function OrganizerInfo() {
           onDelete={handleDeleteOrganizer}
         />
 
-        <VStack space="4xl" py="$8">
+        <Modal isOpen={showQRCode} onClose={() => setShowQRCode(false)}>
+          <ModalBackdrop />
+
+          <ModalContent>
+            <ModalHeader bg="#4C1D95" h="$12" mb="$4" position="relative">
+              <ModalCloseButton position="absolute" top="$2" right="$2">
+                <X size={24} color="#FFFFFF" strokeWidth={2} />
+              </ModalCloseButton>
+            </ModalHeader>
+
+            <ModalBody>
+              <Center>
+                <QRCode
+                  value={encodeIdToHash(organizer.id)}
+                  size={200}
+                  getRef={(ref) => setQrCodeRef(ref)}
+                />
+              </Center>
+            </ModalBody>
+
+            <ModalFooter>
+              <HStack space="md">
+                <Pressable
+                  onPress={handleDownloadQRCode}
+                  bg="#4C1D95"
+                  rounded="$full"
+                  p="$2"
+                >
+                  <Download size={20} color="#FFFFFF" />
+                </Pressable>
+
+                <Pressable
+                  onPress={handleShareQRCode}
+                  bg="#4C1D95"
+                  rounded="$full"
+                  p="$2"
+                >
+                  <Share2 size={20} color="#FFFFFF" />
+                </Pressable>
+              </HStack>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+
+        <VStack space="4xl" py="$8" position="relative">
+          <Box position="absolute" top={20} right={5} zIndex={1}>
+            <Pressable onPress={() => setShowQRCode(!showQRCode)}>
+              <QrCode size={24} color="#4C1D95" />
+            </Pressable>
+          </Box>
+
           <Center>
             <Image
               size="xl"
