@@ -1,5 +1,6 @@
 import InfoCard from "@/components/InfoCard";
 import DeleteModal from "@/components/DeleteModal";
+import { Item } from "@/context/UserContext";
 import {
   Box,
   Button,
@@ -34,27 +35,54 @@ import {
   X,
 } from "lucide-react-native";
 import { useState } from "react";
+import * as ImagePicker from "expo-image-picker";
 
 type Props = {
-  name: string;
-  quantity: number;
+  item: Item;
   isCreating?: boolean;
   onDelete: () => void;
+  onSave: (updatedItem) => void;
 };
 
 export default function ItemCard({
-  name,
-  quantity,
+  item,
   isCreating,
   onDelete,
+  onSave,
 }: Props) {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
-  const [itemName, setItemName] = useState(name);
-  const [itemQuantity, setItemQuantity] = useState(quantity);
+  const [name, setName] = useState(item.name);
+  const [image, setImage] = useState<string | null>(item.image);
+  const [editedImage, setEditedImage] = useState<string | null>(item.image);
+  const [quantity, setQuantity] = useState(item.quantity);
 
-  const infos = [itemName, `${itemQuantity}`];
+  const infos = [name, `${quantity}`];
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setEditedImage(result.assets[0].uri);
+    } else {
+      setEditedImage(image);
+    }
+  };
+
+  const handleSaveChanges = () => {
+    setImage(editedImage);
+
+    const updatedItem = { ...item, name, image: editedImage, quantity };
+
+    onSave(updatedItem);
+    setShowEditForm(false);
+  };
 
   return (
     <Card
@@ -70,6 +98,7 @@ export default function ItemCard({
         onClose={() => {
           setShowInfoModal(false);
           setShowEditForm(false);
+          setEditedImage(image);
         }}
       >
         <ModalBackdrop />
@@ -81,13 +110,25 @@ export default function ItemCard({
             </ModalCloseButton>
 
             <Box flex={1} py="$4" alignItems="center">
-              <Image
-                size="lg"
-                source={{
-                  uri: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-                }}
-                alt="Foto do item"
-              />
+              {showEditForm ? (
+                <Pressable onPress={pickImage}>
+                  <Image
+                    size="lg"
+                    source={{
+                      uri: editedImage,
+                    }}
+                    alt="Foto do item"
+                  />
+                </Pressable>
+              ) : (
+                <Image
+                  size="lg"
+                  source={{
+                    uri: image,
+                  }}
+                  alt="Foto do item"
+                />
+              )}
             </Box>
           </ModalHeader>
 
@@ -103,10 +144,10 @@ export default function ItemCard({
                     <Input>
                       <InputField
                         type="text"
-                        value={itemName}
+                        value={name}
                         placeholder="Nome"
                         placeholderTextColor="#DBDFE5"
-                        onChangeText={setItemName}
+                        onChangeText={setName}
                       />
                     </Input>
                   </FormControl>
@@ -119,10 +160,10 @@ export default function ItemCard({
                     <Input>
                       <InputField
                         type="text"
-                        // value={`${itemQuantity}`}
+                        // value={`${quantity}`}
                         placeholder="Quantidade"
                         placeholderTextColor="#DBDFE5"
-                        onChangeText={(text) => setItemQuantity(parseInt(text))}
+                        onChangeText={(text) => setQuantity(parseInt(text))}
                       />
                     </Input>
                   </FormControl>
@@ -130,7 +171,7 @@ export default function ItemCard({
                   <Box alignItems="center">
                     <Button
                       w="$2/3"
-                      onPress={() => setShowEditForm(false)}
+                      onPress={handleSaveChanges}
                       bgColor="#4C1D95"
                     >
                       <ButtonText>Salvar</ButtonText>
@@ -184,14 +225,14 @@ export default function ItemCard({
           <Image
             size="sm"
             source={{
-              uri: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+              uri: image,
             }}
             alt="Foto do item"
           />
 
           <VStack space="md">
             <Text fontWeight="$bold" fontSize="$xl">
-              {itemName}
+              {name}
             </Text>
 
             <HStack space="xs">
@@ -200,7 +241,7 @@ export default function ItemCard({
               </Pressable>
 
               <Text fontWeight="$bold" fontSize="$xl">
-                {itemQuantity}
+                {quantity}
               </Text>
 
               <Pressable>

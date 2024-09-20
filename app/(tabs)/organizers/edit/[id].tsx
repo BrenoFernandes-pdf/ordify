@@ -6,9 +6,11 @@ import {
   FormControl,
   FormControlLabel,
   FormControlLabelText,
+  HStack,
   Image,
   Input,
   InputField,
+  Pressable,
   ScrollView,
   Text,
   VStack,
@@ -16,6 +18,7 @@ import {
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState, useEffect } from "react";
 import { useUserContext } from "@/context/UserContext";
+import * as ImagePicker from "expo-image-picker";
 
 export default function EditOrganizer() {
   const router = useRouter();
@@ -23,6 +26,7 @@ export default function EditOrganizer() {
   const { readOrganizer, updateOrganizer } = useUserContext();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [image, setImage] = useState<string | null>(null);
   const [organizer, setOrganizer] = useState(null);
 
   const organizerId = parseInt(id!);
@@ -34,8 +38,22 @@ export default function EditOrganizer() {
       setOrganizer(selectedOrganizer);
       setName(selectedOrganizer.name);
       setDescription(selectedOrganizer.description);
+      setImage(selectedOrganizer.image);
     }
   }, [organizerId, readOrganizer]);
+
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   const handleSave = () => {
     if (organizer) {
@@ -43,6 +61,7 @@ export default function EditOrganizer() {
         ...organizer,
         name,
         description,
+        image: image || organizer.image,
       };
 
       updateOrganizer(updatedOrganizer);
@@ -63,13 +82,15 @@ export default function EditOrganizer() {
       <ScrollView px="$6">
         <VStack space="4xl" py="$8">
           <Center>
-            <Image
-              size="xl"
-              source={{
-                uri: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-              }}
-              alt="Foto do organizador"
-            />
+            <Pressable onPress={pickImage}>
+              <Image
+                size="xl"
+                source={{
+                  uri: image ? image : "https://via.placeholder.com/400",
+                }}
+                alt="Foto do organizador"
+              />
+            </Pressable>
           </Center>
 
           <FormControl size="lg" isRequired={true}>

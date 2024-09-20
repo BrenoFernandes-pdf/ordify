@@ -26,7 +26,7 @@ import { generateId } from "@/utils/idManager";
 export default function OrganizerInfo() {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { readOrganizer, deleteOrganizer, createItem, deleteItem } =
+  const { readOrganizer, deleteOrganizer, createItem, deleteItem, updateItem } =
     useUserContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -44,10 +44,15 @@ export default function OrganizerInfo() {
 
   const infos = [organizer.name, organizer.description];
 
-  const handleAddItem = (newItem: { name: string; quantity: number }) => {
+  const handleAddItem = (newItem: {
+    name: string;
+    image: string;
+    quantity: number;
+  }) => {
     createItem(organizer.id, {
       id: generateId("item"),
       name: newItem.name,
+      image: newItem.image,
       quantity: newItem.quantity,
     });
 
@@ -57,6 +62,10 @@ export default function OrganizerInfo() {
   const handleDeleteOrganizer = () => {
     deleteOrganizer(organizer.id);
     router.back();
+  };
+
+  const handleItemSave = (updatedItem) => {
+    updateItem(organizerId, updatedItem);
   };
 
   return (
@@ -80,7 +89,7 @@ export default function OrganizerInfo() {
             <Image
               size="xl"
               source={{
-                uri: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+                uri: organizer.image,
               }}
               alt="Foto do organizador"
             />
@@ -127,9 +136,9 @@ export default function OrganizerInfo() {
               {organizer.items.map((item) => (
                 <ItemCard
                   key={item.id}
-                  name={item.name}
-                  quantity={item.quantity}
+                  item={item}
                   onDelete={() => deleteItem(organizer.id, item.id)}
+                  onSave={handleItemSave}
                 />
               ))}
 
