@@ -52,6 +52,16 @@ export default function CreateOrganizer() {
     }
   };
 
+  const handleItemSave = (updatedItem) => {
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === updatedItem.id
+          ? { ...item, quantity: updatedItem.quantity }
+          : item
+      )
+    );
+  };
+
   const handleAddItem = (newItem) => {
     setItems((prevItems) => [...prevItems, newItem]);
   };
@@ -137,6 +147,7 @@ export default function CreateOrganizer() {
                   item={item}
                   isCreating
                   onDelete={() => handleRemoveItem(item.id)}
+                  onSave={handleItemSave}
                 />
               ))}
 
