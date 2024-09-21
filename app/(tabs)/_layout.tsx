@@ -1,11 +1,19 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
+import { Home, Package, CalendarCheck, User } from "lucide-react-native";
+import { View } from "react-native";
 
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
-  color: string;
-}) {
-  return <FontAwesome size={18} style={{ marginBottom: -3 }} {...props} />;
+function TabBarIcon({ name, focused }: { name: any; focused: boolean }) {
+  const IconComponent = name;
+
+  return (
+    <View>
+      {focused ? (
+        <IconComponent color="#4C1D95" size={30} />
+      ) : (
+        <IconComponent color="#979A9E" size={30} />
+      )}
+    </View>
+  );
 }
 
 export default function AppLayout() {
@@ -15,13 +23,19 @@ export default function AppLayout() {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
+        tabBarStyle: {
+          backgroundColor: "#FFFFFF",
+          height: 60,
+        },
       }}
     >
       <Tabs.Screen
         name="home/index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name={Home} focused={focused} />
+          ),
         }}
       />
 
@@ -29,7 +43,9 @@ export default function AppLayout() {
         name="organizers"
         options={{
           title: "Organizadores",
-          tabBarIcon: ({ color }) => <TabBarIcon name="star-o" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name={Package} focused={focused} />
+          ),
         }}
       />
 
@@ -37,7 +53,9 @@ export default function AppLayout() {
         name="homeAssistant/index"
         options={{
           title: "Assistente Doméstico",
-          tabBarIcon: ({ color }) => <TabBarIcon name="star-o" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name={CalendarCheck} focused={focused} />
+          ),
         }}
       />
 
@@ -45,7 +63,9 @@ export default function AppLayout() {
         name="profile/index"
         options={{
           title: "Perfil",
-          tabBarIcon: ({ color }) => <TabBarIcon name="star-o" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon name={User} focused={focused} />
+          ),
         }}
       />
     </Tabs>
