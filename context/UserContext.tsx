@@ -6,6 +6,7 @@ type Item = {
   name: string;
   image: string;
   quantity: number;
+  creationDate: string;
 };
 
 type Organizer = {

@@ -3,7 +3,7 @@ import AppFab from "@/components/AppFab";
 import DeleteModal from "@/components/DeleteModal";
 import GetIcon from "@/components/GetIcon";
 import HomeCard from "@/components/HomeCard";
-import { Event } from "@/context/UserContext";
+import { Event, Item, Organizer } from "@/context/UserContext";
 import { useUserContext } from "@/context/UserContext";
 import {
   Box,
@@ -20,9 +20,13 @@ import { Trash } from "lucide-react-native";
 
 export default function Home() {
   const router = useRouter();
-  const { user, deleteEvent } = useUserContext();
+  const { user, deleteEvent, deleteItem } = useUserContext();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [eventToDelete, setEventToDelete] = useState<number | null>(null);
+  const [itemToDelete, setItemToDelete] = useState<{
+    organizerId: number;
+    itemId: number;
+  } | null>(null);
 
   const favoriteOrganizers = user.organizers.filter(
     (organizer) => organizer.isFavorited
@@ -45,13 +49,44 @@ export default function Home() {
     return events.filter((event) => isEventUpcoming(event.date));
   };
 
-  const upcomingEvents = getUpcomingEvents(user.events);
+  const getOldItems = (
+    organizers: Organizer[]
+  ): { item: Item; organizerId: number }[] => {
+    const sixMonthsAgo = new Date();
+    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
 
-  const handleDelete = () => {
+    const oldItems: { item: Item; organizerId: number }[] = [];
+
+    organizers.forEach((organizer) => {
+      const filteredItems = organizer.items.filter((item) => {
+        const itemDate = parseDate(item.creationDate);
+        return itemDate <= sixMonthsAgo;
+      });
+
+      filteredItems.forEach((item) => {
+        oldItems.push({ item, organizerId: organizer.id });
+      });
+    });
+
+    return oldItems;
+  };
+
+  const upcomingEvents = getUpcomingEvents(user.events);
+  const oldItems = getOldItems(user.organizers);
+
+  const handleDeleteEvent = () => {
     if (eventToDelete !== null) {
       deleteEvent(eventToDelete);
       setShowDeleteModal(false);
       setEventToDelete(null);
+    }
+  };
+
+  const handleDeleteItem = () => {
+    if (itemToDelete !== null) {
+      deleteItem(itemToDelete.organizerId, itemToDelete.itemId);
+      setShowDeleteModal(false);
+      setItemToDelete(null);
     }
   };
 
@@ -180,14 +215,69 @@ export default function Home() {
               )}
             </VStack>
           </HomeCard>
+
+          <HomeCard description="Itens parados">
+            <VStack space="md">
+              {oldItems.length > 0 ? (
+                oldItems.map(({ item, organizerId }) => (
+                  <Box
+                    key={item.id}
+                    m="$2"
+                    p="$4"
+                    bg="$white"
+                    borderColor="#CFD1D4"
+                    borderWidth={1}
+                    borderRadius="$lg"
+                  >
+                    <HStack justifyContent="space-between" alignItems="center">
+                      <HStack space="md" alignItems="center">
+                        <Image
+                          size="sm"
+                          source={{ uri: item.image }}
+                          alt={item.name}
+                        />
+
+                        <VStack space="xs">
+                          <Text fontWeight="$bold" fontSize="$lg">
+                            {item.name}
+                          </Text>
+
+                          <Text
+                            fontWeight="$light"
+                            fontSize="$sm"
+                            color="#525252"
+                          >
+                            Criado em {item.creationDate}
+                          </Text>
+                        </VStack>
+                      </HStack>
+
+                      <Pressable
+                        onPress={() => {
+                          setItemToDelete({ organizerId, itemId: item.id });
+                          setShowDeleteModal(true);
+                        }}
+                      >
+                        <Trash size={20} color="#000000" />
+                      </Pressable>
+                    </HStack>
+                  </Box>
+                ))
+              ) : (
+                <Box my="$8" alignItems="center">
+                  <Text fontSize="$2xl">Nenhum item antigo encontrado</Text>
+                </Box>
+              )}
+            </VStack>
+          </HomeCard>
         </VStack>
       </ScrollView>
 
       <DeleteModal
-        name="evento"
+        name={eventToDelete ? "evento" : "item"}
         showDeleteModal={showDeleteModal}
         setShowDeleteModal={setShowDeleteModal}
-        onDelete={handleDelete}
+        onDelete={eventToDelete ? handleDeleteEvent : handleDeleteItem}
       />
 
       <AppFab />

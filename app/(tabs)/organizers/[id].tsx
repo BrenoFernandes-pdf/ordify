@@ -69,6 +69,7 @@ export default function OrganizerInfo() {
       name: newItem.name,
       image: newItem.image,
       quantity: newItem.quantity,
+      creationDate: new Date().toISOString(),
     });
 
     setIsModalOpen(false);
@@ -93,21 +94,17 @@ export default function OrganizerInfo() {
 
         const fileName = `qrcode_${organizer.name}.png`;
 
-        // Verificar se é Android e salvar na pasta de Downloads
         if (Platform.OS === "android") {
-          // Usar StorageAccessFramework para salvar na pasta de Downloads
           const permissions =
             await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
 
           if (permissions.granted) {
             const downloadDir = `${permissions.directoryUri}/${fileName}`;
 
-            // Converter a URI da imagem capturada para Base64
             const base64 = await FileSystem.readAsStringAsync(uri, {
               encoding: FileSystem.EncodingType.Base64,
             });
 
-            // Salvar o arquivo na pasta de Downloads pública
             await FileSystem.StorageAccessFramework.createFileAsync(
               permissions.directoryUri,
               fileName,
@@ -122,7 +119,6 @@ export default function OrganizerInfo() {
             alert("Permissão para acessar a pasta de Downloads negada.");
           }
         } else {
-          // iOS não permite salvar diretamente na pasta de Downloads
           const cacheDir = `${FileSystem.cacheDirectory}${fileName}`;
           await FileSystem.writeAsStringAsync(cacheDir, uri, {
             encoding: FileSystem.EncodingType.Base64,
