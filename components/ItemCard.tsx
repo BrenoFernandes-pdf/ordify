@@ -37,6 +37,7 @@ import {
 import { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import * as Sharing from "expo-sharing";
+import * as FileSystem from "expo-file-system";
 
 type Props = {
   item: Item;
@@ -64,13 +65,19 @@ export default function ItemCard({
   const handleShare = async () => {
     try {
       if (await Sharing.isAvailableAsync()) {
-        const isLocal = image.startsWith("file://");
+        let localUri = image;
 
-        const uriToShare = isLocal ? image : `file://${image}`;
+        if (image.startsWith("http")) {
+          const downloadResult = await FileSystem.downloadAsync(
+            image,
+            FileSystem.documentDirectory + "item-image.png"
+          );
+          localUri = downloadResult.uri;
+        }
 
-        await Sharing.shareAsync(uriToShare, {
+        await Sharing.shareAsync(localUri, {
           dialogTitle: "Compartilhar item",
-          mimeType: "image/jpeg",
+          mimeType: "image/png",
         });
       } else {
         alert("Compartilhamento não disponível no seu dispositivo");
