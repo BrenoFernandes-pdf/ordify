@@ -36,6 +36,7 @@ import {
 } from "lucide-react-native";
 import { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
+import * as Sharing from "expo-sharing";
 
 type Props = {
   item: Item;
@@ -59,6 +60,25 @@ export default function ItemCard({
   const [quantity, setQuantity] = useState(item.quantity);
 
   const infos = [name, `${quantity}`];
+
+  const handleShare = async () => {
+    try {
+      if (await Sharing.isAvailableAsync()) {
+        const isLocal = image.startsWith("file://");
+
+        const uriToShare = isLocal ? image : `file://${image}`;
+
+        await Sharing.shareAsync(uriToShare, {
+          dialogTitle: "Compartilhar item",
+          mimeType: "image/jpeg",
+        });
+      } else {
+        alert("Compartilhamento não disponível no seu dispositivo");
+      }
+    } catch (error) {
+      console.log("Erro ao compartilhar:", error);
+    }
+  };
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -220,7 +240,12 @@ export default function ItemCard({
               <HStack space="md">
                 {!isCreating && (
                   <>
-                    <Pressable bg="#4C1D95" rounded="$full" p="$2">
+                    <Pressable
+                      onPress={handleShare}
+                      bg="#4C1D95"
+                      rounded="$full"
+                      p="$2"
+                    >
                       <ExternalLink color="#FFFFFF" size={20} />
                     </Pressable>
 
